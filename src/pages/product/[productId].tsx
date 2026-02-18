@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
+import { GetStaticPaths } from "next";
 
 interface WebPage {
   id: string;
@@ -38,22 +39,20 @@ const ProductPage = (props: ProductPageProps) => {
             </h1>
           </div>
           <ul>
-            {props.products.webPages.map(
-              (webpage: WebPage) => {
-                return (
-                  <li className="pb-4" key={webpage.id}>
-                    <ul>
-                      <li>
-                        <Link href={webpage.url} className="hover:underline">
-                          <div>Shop: {webpage.shop}</div>
-                          <div>Price: {webpage.price}</div>
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                );
-              },
-            )}
+            {props.products.webPages.map((webpage: WebPage) => {
+              return (
+                <li className="pb-4" key={webpage.id}>
+                  <ul>
+                    <li>
+                      <Link href={webpage.url} className="hover:underline">
+                        <div>Shop: {webpage.shop}</div>
+                        <div>Price: {webpage.price}</div>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
@@ -63,7 +62,14 @@ const ProductPage = (props: ProductPageProps) => {
 
 export default ProductPage;
 
-export const getServerSideProps = async (context: {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps = async (context: {
   params: { productId: string };
 }) => {
   console.log(context.params.productId);
@@ -76,11 +82,17 @@ export const getServerSideProps = async (context: {
       },
     },
   );
+
+  if (!response.ok) {
+    return { props: { products: [] }, revalidate: 60 };
+  }
+
   const json: [] = await response.json();
   console.log(json);
   return {
     props: {
       products: json,
+      revalidate: 60,
     },
   };
 };

@@ -81,6 +81,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { products },
-    revalidate: 300, // tweak: 60 / 300 / 900 / 3600
+    revalidate: 300,
   };
 };

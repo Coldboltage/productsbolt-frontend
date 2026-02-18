@@ -1,7 +1,6 @@
 import React from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
-import { GetStaticPaths } from "next";
 
 interface WebPage {
   id: string;
@@ -62,14 +61,7 @@ const ProductPage = (props: ProductPageProps) => {
 
 export default ProductPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};
-
-export const getStaticProps = async (context: {
+export const getServerSideProps = async (context: {
   params: { productId: string };
 }) => {
   console.log(context.params.productId);
@@ -82,17 +74,11 @@ export const getStaticProps = async (context: {
       },
     },
   );
-
-  if (!response.ok) {
-    return { props: { products: [] }, revalidate: 60 };
-  }
-
   const json: [] = await response.json();
   console.log(json);
   return {
     props: {
       products: json,
-      revalidate: 60,
     },
   };
 };

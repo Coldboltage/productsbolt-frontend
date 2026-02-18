@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 
 interface HomeProps {
@@ -62,21 +63,24 @@ interface ServerSideProps {
   };
 }
 
-export const getServerSideProps = async (): Promise<ServerSideProps> => {
-  const response = await fetch(
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(
     `http://${process.env.API_IP}:3000/product/find-all-product-only`,
     {
-      method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.API_KEY} ?? ""`,
+        Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
       },
     },
   );
-  const json: Product[] = await response.json();
-  console.log(json);
+
+  if (!res.ok) {
+    return { props: { products: [] }, revalidate: 60 };
+  }
+
+  const products: Product[] = await res.json();
+
   return {
-    props: {
-      products: json,
-    },
+    props: { products },
+    revalidate: 300, // tweak: 60 / 300 / 900 / 3600
   };
 };

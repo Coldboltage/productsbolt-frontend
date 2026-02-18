@@ -1,7 +1,11 @@
 import Nav from "@/components/Nav";
 import Link from "next/link";
 
-export default function Home(props) {
+interface HomeProps {
+  products: Product[];
+}
+
+export default function Home(props: HomeProps) {
   return (
     <div className={` max-w-5xl mx-auto`}>
       <header>
@@ -20,7 +24,7 @@ export default function Home(props) {
             </p>
           </div>
           <ul>
-            {props.products.map((product: { name: string; id: string }) => {
+            {props.products.map((product: Product) => {
               return (
                 <li className="pb-4 underline" key={product.id}>
                   <Link href={`product/${product.id}`}>{product.name}</Link>
@@ -47,7 +51,18 @@ export default function Home(props) {
   );
 }
 
-export const getServerSideProps = async (context) => {
+interface Product {
+  name: string;
+  id: string;
+}
+
+interface ServerSideProps {
+  props: {
+    products: Product[];
+  };
+}
+
+export const getServerSideProps = async (): Promise<ServerSideProps> => {
   const response = await fetch(
     `http://${process.env.API_IP}:3000/product/find-all-product-only`,
     {
@@ -57,7 +72,7 @@ export const getServerSideProps = async (context) => {
       },
     },
   );
-  const json: [] = await response.json();
+  const json: Product[] = await response.json();
   console.log(json);
   return {
     props: {

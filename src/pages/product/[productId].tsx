@@ -2,7 +2,25 @@ import React from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
 
-const ProductPage = (props) => {
+interface WebPage {
+  id: string;
+  url: string;
+  inStock: boolean;
+  price: string;
+  currencyCode: string;
+  shop: string;
+}
+
+interface Product {
+  productName: string;
+  webPages: WebPage[];
+}
+
+interface ProductPageProps {
+  products: Product;
+}
+
+const ProductPage = (props: ProductPageProps) => {
   return (
     <div className={` max-w-5xl mx-auto`}>
       <header>
@@ -21,14 +39,7 @@ const ProductPage = (props) => {
           </div>
           <ul>
             {props.products.webPages.map(
-              (webpage: {
-                id: string;
-                url: string;
-                inStock: boolean;
-                price: string;
-                currencyCode: string;
-                shop: string;
-              }) => {
+              (webpage: WebPage) => {
                 return (
                   <li className="pb-4" key={webpage.id}>
                     <ul>
@@ -52,7 +63,9 @@ const ProductPage = (props) => {
 
 export default ProductPage;
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: {
+  params: { productId: string };
+}) => {
   console.log(context.params.productId);
   const response = await fetch(
     `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim/true/${context.params.productId}`,

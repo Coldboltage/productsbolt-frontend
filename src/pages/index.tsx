@@ -15,7 +15,7 @@ export default function Home() {
         >
           <div>
             <h1 className="text-7xl text-center align-middle justify-center pb-6">
-              TCG Bolt
+              Cardsbolt
             </h1>
             <p className="text-2xl text-center">
               Find the cheapest shops for the product you want

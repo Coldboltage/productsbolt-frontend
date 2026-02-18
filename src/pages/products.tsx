@@ -20,7 +20,7 @@ export default function Home(props: HomeProps) {
           <div>
             <h1 className="text-2xl justify-center pb-4">Products List</h1>
             <p className="text mb-10">
-              List of all the products currently with TCG Bolt
+              List of all the products currently with Cardsbolt
             </p>
           </div>
           <ul>

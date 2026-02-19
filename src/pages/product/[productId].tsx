@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
 
 interface WebPage {
   id: string;
@@ -61,12 +62,16 @@ const ProductPage = (props: ProductPageProps) => {
 
 export default ProductPage;
 
-export const getServerSideProps = async (context: {
-  params: { productId: string };
-}) => {
-  console.log(context.params.productId);
+export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
+  context,
+) => {
+  // Edge cache behaviour
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=30, stale-while-revalidate=5",
+  );
   const response = await fetch(
-    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim/true/${context.params.productId}`,
+    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim/true/${context.params?.productId}`,
     {
       method: "GET",
       headers: {
@@ -74,7 +79,7 @@ export const getServerSideProps = async (context: {
       },
     },
   );
-  const json: [] = await response.json();
+  const json: Product = await response.json();
   console.log(json);
   return {
     props: {

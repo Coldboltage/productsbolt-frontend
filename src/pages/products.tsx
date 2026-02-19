@@ -59,12 +59,6 @@ interface Product {
   id: string;
 }
 
-interface ServerSideProps {
-  props: {
-    products: Product[];
-  };
-}
-
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
     `http://${process.env.API_IP}:3000/product/find-all-product-only`,

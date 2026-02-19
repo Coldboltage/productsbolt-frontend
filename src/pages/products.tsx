@@ -28,7 +28,9 @@ export default function Home(props: HomeProps) {
             {props.products.map((product: Product) => {
               return (
                 <li className="pb-4 underline" key={product.id}>
-                  <Link href={`product/${product.id}`}>{product.name}</Link>
+                  <Link href={`/product/${product.id}`} prefetch>
+                    {product.name}
+                  </Link>
                 </li>
               );
             })}

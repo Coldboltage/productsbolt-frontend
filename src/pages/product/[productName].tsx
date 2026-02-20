@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 interface WebPage {
   id: string;
@@ -65,10 +65,10 @@ export default ProductPage;
 export const getStaticProps: GetStaticProps<ProductPageProps> = async (
   context,
 ) => {
-  const productId = context.params?.productId as string;
+  const productName = context.params?.productName as string;
 
   const r = await fetch(
-    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim/true/${productId}`,
+    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim-product-name/true/${productName}`,
     { headers: { Authorization: `Bearer ${process.env.API_KEY || ""}` } },
   );
 

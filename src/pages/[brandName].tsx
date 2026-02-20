@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 
 interface HomeProps {
@@ -61,9 +61,10 @@ interface Product {
   brand: string;
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const brandName = context.params?.brandName as string;
   const res = await fetch(
-    `http://${process.env.API_IP}:3000/product/find-all-product-only`,
+    `http://${process.env.API_IP}:3000/product/find-all-product-only-by-brand/${brandName}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
@@ -72,13 +73,20 @@ export const getStaticProps: GetStaticProps = async () => {
   );
 
   if (!res.ok) {
-    return { props: { products: [] }, revalidate: 60 };
+    return { props: { products: [] }, revalidate: 3600 };
   }
 
   const products: Product[] = await res.json();
+
+  console.log(products);
 
   return {
     props: { products },
     revalidate: 300,
   };
 };
+
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: [],
+  fallback: "blocking",
+});

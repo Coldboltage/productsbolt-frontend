@@ -14,7 +14,7 @@ export default function Home(props: HomeProps) {
         <Nav />
       </header>
 
-      <main className=" p-5 mt-10 h-max">
+      <main className=" p-5 mt-10">
         <section
           className="grid mb-10
 "
@@ -26,7 +26,7 @@ export default function Home(props: HomeProps) {
             </p>
           </div>
           <ul className="grid grid-cols-1 md:grid-cols-4 text-center gap-5">
-            {props.products.map((product: Product) => {
+            {props.products.map((product: Product, index: number) => {
               return (
                 <li key={product.id} className="h-full">
                   <Link
@@ -34,14 +34,17 @@ export default function Home(props: HomeProps) {
                     prefetch
                     className="block h-full"
                   >
-                    <div className="flex gap-5 h-full flex-col rounded-lg border border-white/10 bg-gray-600/50 p-4 pb-4 font-extrabold">
+                    <div className="flex items-center gap-5 h-full flex-col rounded-lg border border-white/10 bg-gray-600/50 p-4 pb-4 font-extrabold">
                       <Image
                         src={product.imageUrl}
-                        alt="Magic: The Gathering | Avatar: The Last Airbender Collector Booster Box"
+                        alt={product.name}
                         width={160}
                         height={160}
-                        className="h-40 w-full object-contain"
-                        loading="lazy"
+                        sizes="160px"
+                        priority={index === 0}
+                        fetchPriority={index === 0 ? "high" : undefined}
+                        quality={65}
+                        className="object-contain"
                       />
                       <p>{product.name}</p>
                     </div>

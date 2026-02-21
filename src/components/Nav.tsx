@@ -7,7 +7,7 @@ const Nav = () => {
     <nav className={`grid grid-cols-3 p-5 justify-between`}>
       <div className={`flex gap-5 items-center col-span-3`}>
         <Link className="pr-3 border-line" href="/">
-          <FaHome className="text-3xl" />
+          <FaHome size={28} />{" "}
         </Link>
         <Link className="border-line pl-2 pr-2" href="/magic-the-gathering">
           <div className="flex flex-col gap-2 items-center">

@@ -10,13 +10,11 @@ export default function Home() {
 
       <main className=" p-5">
         <section
-          className="grid items-center justify-center h-[80vh]
+          className="grid items-center justify-center h-[80dvh]
 "
         >
           <div>
-            <h1 className="text-7xl text-center align-middle justify-center pb-6">
-              Cardsbolt
-            </h1>
+            <h1 className="text-7xl text-center pb-6"> Cardsbolt</h1>
             <p className="text-2xl text-center">
               Find the cheapest shops for the product you want
             </p>

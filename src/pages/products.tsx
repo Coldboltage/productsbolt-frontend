@@ -26,7 +26,7 @@ export default function Home(props: HomeProps) {
             </p>
           </div>
           <ul className="grid grid-cols-1 md:grid-cols-4 text-center gap-5">
-            {props.products.map((product: Product, index: number) => {
+            {props.products.map((product: Product) => {
               return (
                 <li key={product.id} className="h-full">
                   <Link
@@ -34,19 +34,19 @@ export default function Home(props: HomeProps) {
                     prefetch
                     className="block h-full"
                   >
-                    <div className="flex items-center gap-5 h-full flex-col rounded-lg border border-white/10 bg-gray-600/50 p-4 pb-4 font-extrabold">
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name}
-                        width={160}
-                        height={160}
-                        sizes="160px"
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? "high" : undefined}
-                        quality={65}
-                        className="object-contain"
-                      />
-                      <p>{product.name}</p>
+                    <div className="flex flex-col h-full rounded-lg border border-white/10 bg-gray-600/50 p-4 font-extrabold">
+                      <div className="h-40 flex items-center justify-center mb-4">
+                        <Image
+                          src={product.imageUrl}
+                          alt={product.name}
+                          width={160}
+                          height={160}
+                          sizes="160px"
+                          className="object-contain"
+                        />
+                      </div>
+
+                      <p className="text-center mt-auto">{product.name}</p>
                     </div>
                   </Link>
                 </li>

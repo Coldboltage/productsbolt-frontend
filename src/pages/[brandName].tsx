@@ -25,7 +25,7 @@ export default function Home(props: HomeProps) {
               List of all the products currently with Cardsbolt
             </p>
           </div>
-          <ul className="grid grid-cols-4 text-center gap-5">
+          <ul className="grid grid-cols-1 md:grid-cols-4 text-center gap-5">
             {props.products.map((product: Product) => {
               return (
                 <li key={product.id} className="h-full">

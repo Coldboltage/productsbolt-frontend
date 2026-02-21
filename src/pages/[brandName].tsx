@@ -41,6 +41,7 @@ export default function Home(props: HomeProps) {
                         width={600}
                         height={600}
                         className="h-40 w-full object-contain"
+                        loading="lazy"
                       />
                       <p className="mt-auto self-end">{product.name}</p>
                     </div>

@@ -38,10 +38,9 @@ export default function Home(props: HomeProps) {
                       <Image
                         src={product.imageUrl}
                         alt="Magic: The Gathering | Avatar: The Last Airbender Collector Booster Box"
-                        width={600}
-                        height={600}
+                        width={160}
+                        height={160}
                         className="h-40 w-full object-contain"
-                        loading="lazy"
                       />
                       <p>{product.name}</p>
                     </div>

@@ -13,7 +13,7 @@ export default function Home(props: HomeProps) {
         <Nav />
       </header>
 
-      <main className=" p-5 mt-10">
+      <main className=" p-5 mt-10 h-max">
         <section
           className="grid mb-10
 "
@@ -37,7 +37,7 @@ export default function Home(props: HomeProps) {
           </ul>
         </section>
         <section>
-          <div className="grid gap-6 grid-cols-3 text-center">
+          <div className="hidden md:grid gap-6 grid-cols-3 text-center">
             <div>
               <p>Find the cheapest shop with the product</p>
             </div>

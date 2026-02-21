@@ -37,7 +37,7 @@ export default function Home(props: HomeProps) {
           </ul>
         </section>
         <section>
-          <div className="grid gap-6 grid-cols-3 text-center">
+          <div className="hidden md:grid gap-6 grid-cols-3 text-center">
             <div>
               <p>Find the cheapest shop with the product</p>
             </div>

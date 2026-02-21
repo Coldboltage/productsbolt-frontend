@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HomeProps {
   products: Product[];
@@ -24,12 +25,25 @@ export default function Home(props: HomeProps) {
               List of all the products currently with Cardsbolt
             </p>
           </div>
-          <ul>
+          <ul className="grid grid-cols-4 text-center gap-5">
             {props.products.map((product: Product) => {
               return (
-                <li className="pb-4 underline" key={product.id}>
-                  <Link href={`/product/${product.urlSafeName}`} prefetch>
-                    {product.name}
+                <li key={product.id} className="h-full">
+                  <Link
+                    href={`/product/${product.urlSafeName}`}
+                    prefetch
+                    className="block h-full"
+                  >
+                    <div className="flex gap-5 h-full flex-col rounded-lg border border-white/10 bg-gray-600/50 p-4 pb-4 font-extrabold">
+                      <Image
+                        src="/atla-collector-box-test.png"
+                        alt="Magic: The Gathering | Avatar: The Last Airbender Collector Booster Box"
+                        width={600}
+                        height={600}
+                        className="h-40 w-full object-contain"
+                      />
+                      <p className="mt-auto self-end">{product.name}</p>
+                    </div>
                   </Link>
                 </li>
               );

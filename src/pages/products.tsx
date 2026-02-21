@@ -36,7 +36,7 @@ export default function Home(props: HomeProps) {
                   >
                     <div className="flex gap-5 h-full flex-col rounded-lg border border-white/10 bg-gray-600/50 p-4 pb-4 font-extrabold">
                       <Image
-                        src="/atla-collector-box-test.png"
+                        src={product.imageUrl}
                         alt="Magic: The Gathering | Avatar: The Last Airbender Collector Booster Box"
                         width={600}
                         height={600}
@@ -74,6 +74,7 @@ interface Product {
   id: string;
   urlSafeName: string;
   brand: string;
+  imageUrl: string;
 }
 
 export const getStaticProps: GetStaticProps = async () => {

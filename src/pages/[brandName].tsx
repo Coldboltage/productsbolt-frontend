@@ -31,7 +31,6 @@ export default function Home(props: HomeProps) {
                 <li key={product.id} className="h-full">
                   <Link
                     href={`/product/${product.urlSafeName}`}
-                    prefetch
                     className="block h-full"
                   >
                     <div className="flex flex-col h-full rounded-lg border border-white/10 bg-gray-600/50 p-4 font-extrabold">

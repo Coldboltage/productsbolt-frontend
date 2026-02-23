@@ -4,6 +4,7 @@ import { Router } from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -14,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Component {...pageProps} />
       <SpeedInsights debug />
+      <Analytics />
     </>
   );
 }

@@ -40,7 +40,7 @@ const ProductPage = (props: ProductPageProps) => {
         <Nav />
       </header>
 
-      <main className=" p-5 mt-10">
+      <main className=" md:p-5 md:mt-10">
         <section className="mb-10">
           <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2">
             <h1 className="text-2xl justify-center pb-10 col-span-2 mt-auto">
@@ -80,13 +80,21 @@ const ProductPage = (props: ProductPageProps) => {
               >
                 <Link
                   href={webpage.url}
-                  className="grid grid-cols-3 text-center px-2 py-2 block"
+                  className="grid grid-cols-3 text-center px-2 py-2 items-center"
                 >
                   <div>{webpage.shop.name}</div>
                   <div>
-                    {webpage.shop.city} / {webpage.shop.province} /{" "}
-                    {webpage.shop.country} {` `}
-                    <ReactCountryFlag countryCode={webpage.shop.country} svg />
+                    <span className="hidden md:inline-block">
+                      {webpage.shop.city} - {webpage.shop.province} -
+                    </span>{" "}
+                    <span>
+                      {" "}
+                      {webpage.shop.country} {` `}
+                      <ReactCountryFlag
+                        countryCode={webpage.shop.country}
+                        svg
+                      />
+                    </span>
                   </div>
                   <div className="font-semibold">
                     {formatCurrency(

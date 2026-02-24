@@ -84,7 +84,7 @@ const ProductPage = (props: ProductPageProps) => {
                 >
                   <div>{webpage.shop.name}</div>
                   <div>
-                    {webpage.shop.city} / {webpage.shop.country} {` `}
+                    {webpage.shop.city} / {webpage.shop.province} {` `}
                     <ReactCountryFlag countryCode={webpage.shop.country} svg />
                   </div>
                   <div className="font-semibold">

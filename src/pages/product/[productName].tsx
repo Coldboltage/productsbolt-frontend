@@ -3,6 +3,8 @@ import Nav from "@/components/Nav";
 import Link from "next/link";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Image from "next/image";
+import ReactCountryFlag from "react-country-flag";
+import { formatCurrency } from "@/utils/format-currency";
 
 interface WebPage {
   id: string;
@@ -10,7 +12,15 @@ interface WebPage {
   inStock: boolean;
   price: string;
   currencyCode: string;
-  shop: string;
+  shop: Shop;
+}
+
+interface Shop {
+  name: string;
+  city: string;
+  province: string;
+  country: string;
+  currency: string;
 }
 
 interface Product {
@@ -72,9 +82,18 @@ const ProductPage = (props: ProductPageProps) => {
                   href={webpage.url}
                   className="grid grid-cols-3 text-center px-2 py-2 block"
                 >
-                  <div>{webpage.shop}</div>
-                  <div>Location Placeholder</div>
-                  <div className="font-semibold">{webpage.price}</div>
+                  <div>{webpage.shop.name}</div>
+                  <div>
+                    {webpage.shop.city} / {webpage.shop.country} {` `}
+                    <ReactCountryFlag countryCode={webpage.shop.country} svg />
+                  </div>
+                  <div className="font-semibold">
+                    {formatCurrency(
+                      +webpage.price,
+                      webpage.shop.currency,
+                      webpage.shop.country,
+                    )}
+                  </div>
                 </Link>
               </li>
             ))}
@@ -93,7 +112,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
   const productName = context.params?.productName as string;
 
   const r = await fetch(
-    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim-product-name/true/${productName}`,
+    `http://${process.env.API_IP}:3000/webpage/find-all-divided-by-product-slim-product-name-shop-info/true/${productName}`,
     { headers: { Authorization: `Bearer ${process.env.API_KEY || ""}` } },
   );
   // const productResponse = await fetch(
@@ -104,6 +123,8 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
   if (!r.ok) return { notFound: true, revalidate: 3600 };
 
   const json: Product = await r.json();
+
+  console.log(json);
   // const product = await productResponse.json()
 
   return {

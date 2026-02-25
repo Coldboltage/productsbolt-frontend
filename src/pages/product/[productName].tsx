@@ -11,6 +11,7 @@ interface WebPage {
   url: string;
   inStock: boolean;
   price: string;
+  euroPrice: number;
   currencyCode: string;
   shop: Shop;
 }
@@ -43,7 +44,7 @@ const ProductPage = (props: ProductPageProps) => {
       <main className=" md:p-5 md:mt-10">
         <section className="mb-10">
           <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2">
-            <h1 className="text-2xl justify-center pb-10 col-span-2 mt-auto">
+            <h1 className="text-sm md:text-2xl justify-center pb-10 col-span-2 mt-auto">
               {props.products.productName}
             </h1>
             <div className="h-40 flex items-center justify-center">
@@ -60,10 +61,11 @@ const ProductPage = (props: ProductPageProps) => {
           <ul className="divide-y divide-gray-700/70">
             {/* Header */}
             <li className="bg-gray-800/60">
-              <div className="grid grid-cols-3 text-center px-2 py-3 font-semibold text-gray-400">
+              <div className="grid grid-cols-3 md:grid-cols-4 text-center px-2 py-3 font-semibold text-gray-400">
                 <p>Shop Name</p>
                 <p>Location</p>
-                <p>Price</p>
+                <p>Euro</p>
+                <p>Original Price</p>
               </div>
             </li>
 
@@ -80,10 +82,10 @@ const ProductPage = (props: ProductPageProps) => {
               >
                 <Link
                   href={webpage.url}
-                  className="grid grid-cols-3 text-center px-2 py-2 items-center"
+                  className="grid grid-cols-3 md:grid-cols-4 text-center px-2 py-2 items-center"
                 >
                   <div>{webpage.shop.name}</div>
-                  <div>
+                  <div className="text-xs">
                     <span className="hidden md:inline-block">
                       {webpage.shop.city} - {webpage.shop.province} -
                     </span>{" "}
@@ -96,7 +98,8 @@ const ProductPage = (props: ProductPageProps) => {
                       />
                     </span>
                   </div>
-                  <div className="font-semibold">
+                  <div className="font-semibold">€{webpage.euroPrice}</div>
+                  <div className="font-semibold hidden md:block">
                     {formatCurrency(
                       +webpage.price,
                       webpage.shop.currency,

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Image from "next/image";
 import ReactCountryFlag from "react-country-flag";
 import { formatCurrency } from "@/utils/format-currency";
+import { TAX_RATES } from "@/tax.constant";
 
 interface WebPage {
   id: string;
@@ -14,6 +15,10 @@ interface WebPage {
   euroPrice: number;
   currencyCode: string;
   shop: Shop;
+  adjustedPrice?: number;
+  adjustedPriceUpper?: number;
+  adjustedPriceEuro?: number;
+  adjustedPriceEuroUpper?: number;
 }
 
 interface Shop {
@@ -22,6 +27,7 @@ interface Shop {
   province: string;
   country: string;
   currency: string;
+  vatShown: boolean;
 }
 
 interface Product {
@@ -35,6 +41,69 @@ interface ProductPageProps {
 }
 
 const ProductPage = (props: ProductPageProps) => {
+  const [userCountry, setUserCountry] = useState("GB");
+  const [allProducts, setAllProducts] = useState<Product>(props.products);
+
+  const adjustedProductPrices = allProducts.webPages.map((page) => {
+    const storeRate = TAX_RATES[page.shop.country] ?? 0;
+    const userRate = TAX_RATES[userCountry] ?? 0;
+
+    const gross = +page.price;
+
+    // 1️⃣ Remove store VAT if shown
+    const netStore = page.shop.vatShown ? gross / (1 + storeRate) : gross;
+
+    // 2️⃣ Derive FX rate from the two prices
+    const fxRate = page.euroPrice && gross ? page.euroPrice / gross : 1;
+
+    // 3️⃣ Convert to EUR
+    const netEuro = netStore * fxRate;
+
+    // 4️⃣ Apply user VAT
+    const finalEuro = netEuro * (1 + userRate);
+
+    // 5️⃣ Round once
+    const adjustedPriceEuro = Math.round(finalEuro * 100) / 100;
+
+    // 🔹 FX buffer
+    const FX_BUFFER = 0.03;
+
+    const adjustedPriceEuroUpper =
+      Math.round(finalEuro * (1 + FX_BUFFER) * 100) / 100;
+
+    console.log({
+      name: page.shop.name,
+      gross,
+      // euroPriceGross,
+      vatShown: page.shop.vatShown,
+      storeRate,
+      userRate,
+    });
+
+    return {
+      adjustedPriceEuro,
+      // adjustedPrice,
+      // adjustedPriceUpper,
+      adjustedPriceEuroUpper,
+    };
+  });
+
+  const addedVatInformation = allProducts.webPages
+    .map((page, index) => {
+      // page.adjustedPrice = adjustedProductPrices[index].adjustedPrice;
+      page.adjustedPriceEuro = adjustedProductPrices[index].adjustedPriceEuro;
+      page.adjustedPriceEuroUpper =
+        adjustedProductPrices[index].adjustedPriceEuroUpper;
+      // page.adjustedPriceUpper = adjustedProductPrices[index].adjustedPriceUpper;
+      return page;
+    })
+    .sort(
+      (before, after) =>
+        (before.adjustedPriceEuro ?? 0) - (after.adjustedPriceEuro ?? 0),
+    );
+
+  console.log(adjustedProductPrices);
+
   return (
     <div className={` max-w-5xl mx-auto`}>
       <header>
@@ -64,12 +133,20 @@ const ProductPage = (props: ProductPageProps) => {
               <div className="grid grid-cols-3 md:grid-cols-4 text-center px-2 py-3 font-semibold text-gray-400">
                 <p>Shop Name</p>
                 <p>Location</p>
-                <p>Euro</p>
+                {/* <p>Euro</p> */}
                 <p>Original Price</p>
+                <p>Euro Price</p>
+                {/* <p>Taxed Original Price</p> */}
               </div>
             </li>
+            <li className="flex justify-center text-center">
+              <p className="text-[11px] text-gray-400/50 my-2 italic">
+                Prices include VAT where applicable. Shipping calculated at
+                checkout.
+              </p>
+            </li>
 
-            {props.products.webPages.map((webpage: WebPage) => (
+            {addedVatInformation.map((webpage: WebPage) => (
               <li
                 key={webpage.id}
                 className="
@@ -98,14 +175,47 @@ const ProductPage = (props: ProductPageProps) => {
                       />
                     </span>
                   </div>
-                  <div className="font-semibold">€{webpage.euroPrice}</div>
                   <div className="font-semibold hidden md:block">
+                    <span>
+                      {" "}
+                      {formatCurrency(
+                        +webpage.price,
+                        webpage.shop.currency,
+                        webpage.shop.country,
+                      )}
+                      {"  "}
+                    </span>
+
+                    <span className="text-[10px]  text-gray-400/70">
+                      {webpage.shop.vatShown
+                        ? "VAT included"
+                        : "Tax not included"}
+                    </span>
+                  </div>
+                  <div className="font-semibold">€{webpage.euroPrice}</div>
+
+                  {/* <div className="font-semibold">
+                    €{webpage.adjustedPriceEuro} / €
+                    {webpage.adjustedPriceEuroUpper}
+                  </div> */}
+                  {/* <div className="font-semibold hidden md:block">
                     {formatCurrency(
-                      +webpage.price,
+                      webpage.adjustedPrice ?? 0,
                       webpage.shop.currency,
                       webpage.shop.country,
                     )}
-                  </div>
+
+                    {webpage.shop.country !== userCountry && (
+                      <>
+                        <span className="mx-1 text-gray-400">/</span>
+                        {formatCurrency(
+                          webpage.adjustedPriceUpper ?? 0,
+                          webpage.shop.currency,
+                          webpage.shop.country,
+                        )}
+                      </>
+                    )}
+                  </div>{" "} */}
                 </Link>
               </li>
             ))}

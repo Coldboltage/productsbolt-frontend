@@ -44,20 +44,26 @@ interface ProductPageProps {
 }
 
 const ProductPage = (props: ProductPageProps) => {
-  const [userCountry, setUserCountry] = useState("");
+  const [userCountry, setUserCountry] = useState("GB");
   const [allProducts, setAllProducts] = useState<Product>(props.products);
 
   useEffect(() => {
+    if (localStorage.getItem("userCountry")) return;
+
     fetch("/api/geo")
       .then((res) => res.json())
       .then((data) => {
         setUserCountry(data.country);
+        return data;
+      })
+      .then((data) => {
+        localStorage.setItem("userCountry", data.country);
       });
   }, []);
 
   const userCurrency = getCurrencyFromCountry(userCountry);
-
   console.log(userCurrency);
+
   // console.log(
   //   allProducts.webPages.forEach((page) =>
   //     console.log(page.shop.currency === userCurrency),

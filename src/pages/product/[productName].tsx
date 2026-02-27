@@ -217,8 +217,9 @@ const ProductPage = (props: ProductPageProps) => {
                     <span className="font-semibold">€{webpage.euroPrice}</span>
                     <span className="text-[10px]  text-gray-400/70">
                       {" "}
-                      {userCurrency !== webpage.shop.currency ||
-                        (userCountry && `  FX fees may apply`)}
+                      {userCountry &&
+                        userCurrency !== webpage.shop.currency &&
+                        `  FX fees may apply`}
                     </span>
                   </div>
 

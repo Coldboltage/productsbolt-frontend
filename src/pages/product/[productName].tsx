@@ -142,14 +142,14 @@ const ProductPage = (props: ProductPageProps) => {
             <h1 className="text-sm md:text-2xl justify-center pb-10 col-span-2 mt-auto">
               {props.products.productName}
             </h1>
-            <div className="h-40 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <Image
                 src={props.products.productImage}
                 alt={`Image of: ${props.products.productName}`}
                 width={160}
                 height={160}
                 sizes="160px"
-                className="object-contain"
+                className="object-contain p-2"
               />
             </div>
           </div>
@@ -225,7 +225,7 @@ const ProductPage = (props: ProductPageProps) => {
                       {" "}
                       {userCountry &&
                         userCurrency !== webpage.shop.currency &&
-                        `  FX fees may apply`}
+                        `  Additional fee's may apply`}
                     </span>
                   </div>
 

@@ -48,7 +48,13 @@ const ProductPage = (props: ProductPageProps) => {
   const [allProducts, setAllProducts] = useState<Product>(props.products);
 
   useEffect(() => {
-    if (localStorage.getItem("userCountry")) return;
+    const storedCountry = localStorage.getItem("userCountry");
+
+    if (storedCountry && storedCountry !== "undefined") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUserCountry(userCountry);
+      return;
+    }
 
     fetch("/api/geo")
       .then((res) => res.json())

@@ -4,7 +4,10 @@ import Link from "next/link";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Image from "next/image";
 import ReactCountryFlag from "react-country-flag";
-import { formatCurrency } from "@/utils/format-currency";
+import {
+  formatCurrency,
+  getCurrencyFromCountry,
+} from "@/utils/format-currency";
 import { TAX_RATES } from "@/tax.constant";
 
 interface WebPage {
@@ -41,8 +44,25 @@ interface ProductPageProps {
 }
 
 const ProductPage = (props: ProductPageProps) => {
-  const [userCountry, setUserCountry] = useState("GB");
+  const [userCountry, setUserCountry] = useState("");
   const [allProducts, setAllProducts] = useState<Product>(props.products);
+
+  useEffect(() => {
+    fetch("/api/geo")
+      .then((res) => res.json())
+      .then((data) => {
+        setUserCountry(data.country);
+      });
+  }, []);
+
+  const userCurrency = getCurrencyFromCountry(userCountry);
+
+  console.log(userCurrency);
+  // console.log(
+  //   allProducts.webPages.forEach((page) =>
+  //     console.log(page.shop.currency === userCurrency),
+  //   ),
+  // );
 
   const adjustedProductPrices = allProducts.webPages.map((page) => {
     const storeRate = TAX_RATES[page.shop.country] ?? 0;
@@ -71,14 +91,14 @@ const ProductPage = (props: ProductPageProps) => {
     const adjustedPriceEuroUpper =
       Math.round(finalEuro * (1 + FX_BUFFER) * 100) / 100;
 
-    console.log({
-      name: page.shop.name,
-      gross,
-      // euroPriceGross,
-      vatShown: page.shop.vatShown,
-      storeRate,
-      userRate,
-    });
+    // console.log({
+    //   name: page.shop.name,
+    //   gross,
+    //   // euroPriceGross,
+    //   vatShown: page.shop.vatShown,
+    //   storeRate,
+    //   userRate,
+    // });
 
     return {
       adjustedPriceEuro,
@@ -140,9 +160,10 @@ const ProductPage = (props: ProductPageProps) => {
               </div>
             </li>
             <li className="flex justify-center text-center">
-              <p className="text-[11px] text-gray-400/50 my-2 italic">
-                Prices include VAT where applicable. Shipping calculated at
-                checkout.
+              <p className="text-[11px] text-gray-400/70 my-2 italic">
+                Sorted by estimated total for your location. EUR prices use
+                hourly exchange rates. VAT, shipping and retailer fees may apply
+                at checkout.
               </p>
             </li>
 
@@ -159,10 +180,10 @@ const ProductPage = (props: ProductPageProps) => {
               >
                 <Link
                   href={webpage.url}
-                  className="grid grid-cols-3 md:grid-cols-4 text-center px-2 py-2 items-center"
+                  className="grid grid-cols-3 md:grid-cols-4 px-2 py-2 items-center"
                 >
-                  <div>{webpage.shop.name}</div>
-                  <div className="text-xs">
+                  <div className="pl-2">{webpage.shop.name}</div>
+                  <div className="text-xs pl-2">
                     <span className="hidden md:inline-block">
                       {webpage.shop.city} - {webpage.shop.province} -
                     </span>{" "}
@@ -175,7 +196,7 @@ const ProductPage = (props: ProductPageProps) => {
                       />
                     </span>
                   </div>
-                  <div className="font-semibold hidden md:block">
+                  <div className="font-semibold hidden md:block pl-2">
                     <span>
                       {" "}
                       {formatCurrency(
@@ -192,7 +213,14 @@ const ProductPage = (props: ProductPageProps) => {
                         : "Tax not included"}
                     </span>
                   </div>
-                  <div className="font-semibold">€{webpage.euroPrice}</div>
+                  <div className="pl-2">
+                    <span className="font-semibold">€{webpage.euroPrice}</span>
+                    <span className="text-[10px]  text-gray-400/70">
+                      {" "}
+                      {userCurrency !== webpage.shop.currency ||
+                        (userCountry && `  FX fees may apply`)}
+                    </span>
+                  </div>
 
                   {/* <div className="font-semibold">
                     €{webpage.adjustedPriceEuro} / €

@@ -122,7 +122,7 @@ const ProductPage = (props: ProductPageProps) => {
         (before.adjustedPriceEuro ?? 0) - (after.adjustedPriceEuro ?? 0),
     );
 
-  console.log(adjustedProductPrices);
+  // console.log(adjustedProductPrices);
 
   return (
     <div className={` max-w-5xl mx-auto`}>

@@ -121,24 +121,43 @@ const ProductPage = (props: ProductPageProps) => {
     };
   });
 
-  const addedVatInformation = allProducts.webPages
-    .map((page, index) => {
-      // page.adjustedPrice = adjustedProductPrices[index].adjustedPrice;
-      page.adjustedPriceEuro = adjustedProductPrices[index].adjustedPriceEuro;
-      page.adjustedPriceEuroUpper =
-        adjustedProductPrices[index].adjustedPriceEuroUpper;
-      // page.adjustedPriceUpper = adjustedProductPrices[index].adjustedPriceUpper;
-      return page;
+  const pagesSorted = allProducts.webPages
+    .map((page) => {
+      const storeRate = TAX_RATES[page.shop.country] ?? 0;
+      const userRate = TAX_RATES[userCountry] ?? 0;
+
+      console.warn(userRate);
+
+      const gross = +page.price;
+      const netStore = page.shop.vatShown ? gross / (1 + storeRate) : gross;
+
+      const fxRate = page.euroPrice && gross ? page.euroPrice / gross : 1;
+
+      const finalEuro = netStore * fxRate * (1 + userRate);
+
+      const adjustedPriceEuro = Math.round(finalEuro * 100) / 100;
+
+      const FX_BUFFER = 0.03;
+      const adjustedPriceEuroUpper =
+        Math.round(finalEuro * (1 + FX_BUFFER) * 100) / 100;
+
+      return {
+        ...page,
+        adjustedPriceEuro,
+        adjustedPriceEuroUpper,
+      };
     })
     .sort(
-      (before, after) =>
-        (before.adjustedPriceEuro ?? 0) - (after.adjustedPriceEuro ?? 0),
+      (a, b) =>
+        (a.adjustedPriceEuro ?? Infinity) - (b.adjustedPriceEuro ?? Infinity),
     );
+
+  console.log(pagesSorted);
 
   // console.log(adjustedProductPrices);
 
   return (
-    <div className={` max-w-5xl mx-auto`}>
+    <div className={` max-w-6xl mx-auto`}>
       <header>
         <Nav />
       </header>
@@ -180,7 +199,7 @@ const ProductPage = (props: ProductPageProps) => {
               </p>
             </li>
 
-            {addedVatInformation.map((webpage: WebPage) => (
+            {pagesSorted.map((webpage: WebPage) => (
               <li
                 key={webpage.id}
                 className="
@@ -220,19 +239,21 @@ const ProductPage = (props: ProductPageProps) => {
                       {"  "}
                     </span>
 
-                    <span className="text-[10px]  text-gray-400/70">
+                    <span className="text-[10px]  text-gray-200/90">
                       {webpage.shop.vatShown
                         ? "VAT included"
                         : "Tax not included"}
                     </span>
                   </div>
                   <div className="pl-2">
-                    <span className="font-semibold">€{webpage.euroPrice}</span>
+                    <span className="font-semibold mr-1">
+                      €{webpage.euroPrice}
+                    </span>
                     <span className="text-[10px]  text-gray-400/70">
                       {" "}
                       {userCountry &&
                         userCurrency !== webpage.shop.currency &&
-                        `  Additional fee's may apply`}
+                        `Est. €${+webpage.adjustedPriceEuro!} additional fees may apply`}
                     </span>
                   </div>
 

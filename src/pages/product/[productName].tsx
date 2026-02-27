@@ -51,8 +51,9 @@ const ProductPage = (props: ProductPageProps) => {
     const storedCountry = localStorage.getItem("userCountry");
 
     if (storedCountry && storedCountry !== "undefined") {
+      console.log(`storedCountry: ${storedCountry}`);
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUserCountry(userCountry);
+      setUserCountry(storedCountry);
       return;
     }
 

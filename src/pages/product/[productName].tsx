@@ -182,7 +182,7 @@ const ProductPage = (props: ProductPageProps) => {
           <ul className="divide-y divide-gray-700/70">
             {/* Header */}
             <li className="bg-gray-800/60">
-              <div className="grid grid-cols-3 md:grid-cols-4 text-center px-2 py-3 font-semibold text-gray-400">
+              <div className="grid text-xs md:text-lg grid-cols-4 md:grid-cols-4 text-center px-2 py-3 font-semibold text-gray-400">
                 <p>Shop Name</p>
                 <p>Location</p>
                 {/* <p>Euro</p> */}
@@ -207,12 +207,13 @@ const ProductPage = (props: ProductPageProps) => {
                 even:bg-slate-800/40
                 hover:bg-slate-700/60
                  transition
-                 text-sm
+                 text-[12px]
+                 md:text-sm
                 "
               >
                 <Link
                   href={webpage.url}
-                  className="grid grid-cols-3 md:grid-cols-4 px-2 py-2 items-center"
+                  className="grid text-center md:text-left grid-cols-4 md:grid-cols-4 px-2 py-2 items-center"
                 >
                   <div className="pl-2">{webpage.shop.name}</div>
                   <div className="text-xs pl-2">
@@ -228,7 +229,7 @@ const ProductPage = (props: ProductPageProps) => {
                       />
                     </span>
                   </div>
-                  <div className="font-semibold hidden md:block pl-2">
+                  <div className="font-semibold md:block pl-2">
                     <span>
                       {" "}
                       {formatCurrency(
@@ -245,11 +246,11 @@ const ProductPage = (props: ProductPageProps) => {
                         : "Tax not included"}
                     </span>
                   </div>
-                  <div className="pl-2">
+                  <div className="pl-2 flex flex-col sm:inline-block ">
                     <span className="font-semibold mr-1">
                       €{webpage.euroPrice}
                     </span>
-                    <span className="text-[10px]  text-gray-400/70">
+                    <span className="text-[8px] sm:text-[10px]  text-gray-400/70">
                       {" "}
                       {userCountry &&
                         userCurrency !== webpage.shop.currency &&

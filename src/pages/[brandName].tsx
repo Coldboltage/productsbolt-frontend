@@ -33,8 +33,8 @@ export default function Home(props: HomeProps) {
                     href={`/product/${product.urlSafeName}`}
                     className="block h-full"
                   >
-                    <div className="flex flex-col h-full rounded-lg border border-white/10 bg-gray-600/50 p-4 font-extrabold">
-                      <div className="h-40 flex items-center justify-center mb-4">
+                    <div className="flex gap-2 flex-col h-full rounded-lg border border-white/10 bg-gray-600/50 p-4 font-extrabold">
+                      <div className="flex items-center justify-center mb-1">
                         <Image
                           src={product.imageUrl}
                           alt={product.name}
@@ -46,6 +46,10 @@ export default function Home(props: HomeProps) {
                       </div>
 
                       <p className="mt-auto text-center">{product.name}</p>
+                      <p className="text-[11px] font-light">
+                        Release Date:{" "}
+                        {new Date(product.releaseDate).toLocaleDateString()}
+                      </p>
                     </div>
                   </Link>
                 </li>
@@ -77,6 +81,7 @@ interface Product {
   urlSafeName: string;
   brand: string;
   imageUrl: string;
+  releaseDate: Date;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {

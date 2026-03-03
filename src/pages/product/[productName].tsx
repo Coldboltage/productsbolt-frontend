@@ -9,6 +9,7 @@ import {
   getCurrencyFromCountry,
 } from "@/utils/format-currency";
 import { TAX_RATES } from "@/tax.constant";
+import Head from "next/head";
 
 interface WebPage {
   id: string;
@@ -158,6 +159,18 @@ const ProductPage = (props: ProductPageProps) => {
 
   return (
     <div className={` max-w-6xl mx-auto`}>
+      <Head>
+        <title>{props.products.productName} Page</title>
+
+        <meta
+          name="description"
+          content={
+            props.products.productName &&
+            `Compare prices for ${props.products.productName} from multiple trading card retailers in one place. View a full table of shop listings with VAT-adjusted EUR pricing and live exchange rates.`
+          }
+        />
+      </Head>
+
       <header>
         <Nav />
       </header>

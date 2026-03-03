@@ -2,14 +2,44 @@ import Nav from "@/components/Nav";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 interface HomeProps {
   products: Product[];
+  brandInfo: {
+    urlSafeName: string;
+    name: string;
+    description: string;
+  };
 }
 
 export default function Home(props: HomeProps) {
   return (
     <div className={` max-w-5xl mx-auto`}>
+      <Head>
+        <title>{props.brandInfo.name} Products Page | Cardsbolt</title>
+        <meta
+          name="description"
+          content={
+            props.brandInfo
+              ? `Compare live prices for ${props.brandInfo.name} across trusted TCG retailers. VAT-adjusted EUR pricing with real-time exchange rates.`
+              : "This product is not yet indexed on Productsbolt. Check back soon for price comparisons."
+          }
+        />
+        <meta
+          property="og:title"
+          content={props.brandInfo?.name ?? "Productsbolt"}
+        />
+        <meta
+          property="og:description"
+          content={
+            props.brandInfo
+              ? `Find the best price for ${props.brandInfo.name} across multiple stores.`
+              : "Trading card game price comparison platform."
+          }
+        />
+      </Head>
+
       <header>
         <Nav />
       </header>
@@ -22,7 +52,9 @@ export default function Home(props: HomeProps) {
           <div>
             <h1 className="text-2xl justify-center pb-4">Products List</h1>
             <p className="text mb-10">
-              List of all the products currently with Cardsbolt
+              <span>All products found for </span>
+              <span className="font-extrabold italic">{`${props.brandInfo.name} `}</span>
+              <span>with an active listing</span>
             </p>
           </div>
           <ul className="grid grid-cols-1 md:grid-cols-4 text-center gap-5">
@@ -87,7 +119,15 @@ interface Product {
 export const getStaticProps: GetStaticProps = async (context) => {
   const brandName = context.params?.brandName as string;
   const res = await fetch(
-    `http://${process.env.API_IP}:3000/product/find-all-product-only-by-brand/${brandName}`,
+    `http://${process.env.API_IP}:3000/product/find-all-product-only-by-brand-with-pages/${brandName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
+      },
+    },
+  );
+  const brandInfoResponse = await fetch(
+    `http://${process.env.API_IP}:3000/brand/find-one-by-url-safe-name/${brandName}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
@@ -100,11 +140,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const products: Product[] = await res.json();
+  const brandInfoJson = await brandInfoResponse.json();
 
-  console.log(products);
+  console.log(products[0]);
+
+  // console.log(products);
 
   return {
-    props: { products },
+    props: { products, brandInfo: brandInfoJson },
     revalidate: 3600,
   };
 };

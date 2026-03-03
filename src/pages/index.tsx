@@ -1,9 +1,13 @@
 import Nav from "@/components/Nav";
+import Head from "next/head";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className={` max-w-5xl mx-auto`}>
+      <Head>
+        <title>Cardsbolt: TCG Price Comparison</title>
+      </Head>
       <header>
         <Nav />
       </header>

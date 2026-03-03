@@ -45,7 +45,7 @@ const Nav = () => {
           </div>
         </Link>
 
-        <Link className="border-line pl-2 pr-2" href="/pokemon">
+        <Link className="border-line pl-2 pr-2" href="/one-piece">
           <div className="flex flex-col gap-2 items-center">
             <Image
               src="/one-piece.png"

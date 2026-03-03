@@ -44,6 +44,18 @@ const Nav = () => {
             {/* <span className="hidden md:block md:text-xs">Pokemon</span> */}
           </div>
         </Link>
+
+        <Link className="border-line pl-2 pr-2" href="/pokemon">
+          <div className="flex flex-col gap-2 items-center">
+            <Image
+              src="/one-piece.png"
+              alt="Pokemon clickable logo"
+              width={64}
+              height={64}
+            />
+            {/* <span className="hidden md:block md:text-xs">Pokemon</span> */}
+          </div>
+        </Link>
       </div>
       {/* <div className={`flex justify-end items-center`}>
         <Link href="/" className="border-line">

@@ -174,12 +174,8 @@ const ProductPage = (props: ProductPageProps) => {
 
         <meta
           name="description"
-          content={
-            props.products.productName &&
-            `Compare prices for ${props.products.productName} from multiple trading card retailers in one place. View a full table of shop listings with VAT-adjusted EUR pricing and live exchange rates.`
-          }
+          content={`${props.products.productName}; From €${props.products.webPages?.[0].euroPrice}; ${props.products.webPages?.length} retailers compared; Price range €${props.products.webPages?.[0].euroPrice}–€${props.products.webPages?.at(-1)?.euroPrice}. Compare trading card game booster box prices on Cardsbolt.`}
         />
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: props.productJsonLd }}

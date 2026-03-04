@@ -160,7 +160,15 @@ const ProductPage = (props: ProductPageProps) => {
   return (
     <div className={` max-w-6xl mx-auto`}>
       <Head>
-        <title>{props.products.productName} Page</title>
+        <title>
+          {props.products.productName} from{" "}
+          {formatCurrency(
+            +pagesSorted[0].price,
+            pagesSorted[0].shop.currency,
+            pagesSorted[0].shop.country,
+          )}{" "}
+          – Compare TCG Prices | Cardsbolt
+        </title>
 
         <meta
           name="description"
@@ -177,10 +185,28 @@ const ProductPage = (props: ProductPageProps) => {
 
       <main className=" md:p-5 md:mt-10">
         <section className="mb-10">
-          <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2">
-            <h1 className="text-sm md:text-2xl justify-center pb-10 col-span-2 mt-auto">
-              {props.products.productName}
-            </h1>
+          <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2 items-center">
+            <div className="justify-center py-3 col-span-2">
+              <h1 className="text-sm md:text-2xl mb-4 font-bold mt-2">
+                {props.products.productName}
+              </h1>
+              <p className="text-xs">
+                The cheapest {props.products.productName} currently available is{" "}
+                {formatCurrency(
+                  +pagesSorted[0].price,
+                  pagesSorted[0].shop.currency,
+                  pagesSorted[0].shop.country,
+                )}{" "}
+                from {pagesSorted[0].shop.name} in {pagesSorted[0].shop.country}
+                .
+              </p>
+              <p className="hidden text-xs md:inline-block mt-2">
+                Cardsbolt compares prices for trading card game booster boxes
+                across UK and international TCG retailers so players can quickly
+                find the cheapest place to buy booster boxes online.
+              </p>
+            </div>
+
             <div className="flex items-center justify-center">
               <Image
                 src={props.products.productImage}

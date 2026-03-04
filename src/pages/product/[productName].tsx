@@ -37,11 +37,13 @@ interface Shop {
 interface Product {
   productName: string;
   productImage: string;
+  productBrand: string;
   webPages: WebPage[];
 }
 
 interface ProductPageProps {
   products: Product;
+  productJsonLd: string;
 }
 
 const ProductPage = (props: ProductPageProps) => {
@@ -176,6 +178,11 @@ const ProductPage = (props: ProductPageProps) => {
             props.products.productName &&
             `Compare prices for ${props.products.productName} from multiple trading card retailers in one place. View a full table of shop listings with VAT-adjusted EUR pricing and live exchange rates.`
           }
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: props.productJsonLd }}
         />
       </Head>
 
@@ -352,8 +359,32 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
   console.log(json);
   // const product = await productResponse.json()
 
+  const lowest = json.webPages?.[0];
+  const highest = json.webPages?.at(-1) ?? lowest;
+
+  const productJsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: json.productName,
+    image: json.productImage,
+    url: `https://cardsbolt.com/product/${json.productName}`,
+    brand: {
+      "@type": "Brand",
+      name: json.productBrand,
+    },
+    dateModified: new Date().toISOString(),
+    offers: {
+      "@type": "AggregateOffer",
+      lowPrice: Number(lowest.euroPrice),
+      highPrice: Number(highest.euroPrice),
+      offerCount: json.webPages.length,
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+    },
+  });
+
   return {
-    props: { products: json },
+    props: { products: json, productJsonLd },
     revalidate: 6000,
   };
 };

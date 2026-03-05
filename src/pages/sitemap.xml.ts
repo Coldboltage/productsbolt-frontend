@@ -1,5 +1,4 @@
-import type { GetServerSideProps, GetStaticProps } from "next";
-import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
+import type { GetServerSideProps } from "next";
 
 interface Product {
   name: string;
@@ -7,7 +6,7 @@ interface Product {
   urlSafeName: string;
   brand: string;
   imageUrl: string;
-  updatedLast: Timestamp;
+  updatedLast: string | Date;
 }
 
 interface ProductPageProps {
@@ -42,7 +41,9 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async ({
   );
 
   if (!productResponse.ok) {
-    return { props: { products: [] }, revalidate: 60 };
+    res.statusCode = 500;
+    res.end();
+    return { props: { products: [] } };
   }
 
   const products: Product[] = await productResponse.json();
@@ -55,3 +56,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async ({
 
   return { props: { products } };
 };
+
+export default function SiteMap() {
+  return null;
+}

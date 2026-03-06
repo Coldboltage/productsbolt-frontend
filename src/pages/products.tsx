@@ -9,7 +9,7 @@ interface HomeProps {
 
 export default function Home(props: HomeProps) {
   return (
-    <div className={` max-w-5xl mx-auto`}>
+    <div className={` max-w-6xl mx-auto`}>
       <header>
         <Nav />
       </header>

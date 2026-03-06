@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className={` max-w-5xl mx-auto`}>
+    <div className={` max-w-6xl mx-auto`}>
       <Head>
         <title>Cardsbolt: TCG Price Comparison</title>
       </Head>

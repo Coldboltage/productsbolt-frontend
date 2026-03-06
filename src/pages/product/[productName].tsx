@@ -10,6 +10,7 @@ import {
 } from "@/utils/format-currency";
 import { TAX_RATES } from "@/tax.constant";
 import Head from "next/head";
+import { FaChevronRight } from "react-icons/fa";
 
 interface WebPage {
   id: string;
@@ -38,6 +39,7 @@ interface Product {
   productName: string;
   productImage: string;
   productBrand: string;
+  productUrlSafeName: string;
   webPages: WebPage[];
 }
 
@@ -187,6 +189,14 @@ const ProductPage = (props: ProductPageProps) => {
       </header>
 
       <main className=" md:p-5 md:mt-10">
+        <div className="flex items-center gap-2 mb-2">
+          <Link href={`/`}>Home</Link>
+          <FaChevronRight />
+          <Link href={`/${props.products.productUrlSafeName}`}>
+            {props.products.productBrand}
+          </Link>{" "}
+        </div>
+
         <section className="mb-10">
           <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2 items-center">
             <div className="justify-center py-3 col-span-2">

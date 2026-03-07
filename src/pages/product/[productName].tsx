@@ -49,6 +49,49 @@ interface ProductPageProps {
   productJsonLd: string;
 }
 
+const faqs = [
+  {
+    question: "What does Cardsbolt do?",
+    answer:
+      "Cardsbolt is a TCG price comparison site that compares popular and lesser-known shops to help you find the cheapest boxes currently in stock.",
+  },
+  {
+    question: "How often do prices and stock update?",
+    answer:
+      "Prices and availability are checked periodically throughout the day. As soon as we detect an update from a shop, listings refresh automatically.",
+  },
+  {
+    question: "Why not just use search engines?",
+    answer:
+      "Search engines can help you discover products, but they usually do not tell you if the listing is the cheapest or currently in stock. Cardsbolt is built specifically for that.",
+  },
+  {
+    question: "How does currency conversion work?",
+    answer:
+      "Depending on your region, Cardsbolt applies currency conversion and rough tax estimates so listings are sorted closer to what you would really pay.",
+  },
+  {
+    question: "What shops are included?",
+    answer:
+      "Cardsbolt tracks both widely known stores and smaller shops that are often hard to discover through normal search results.",
+  },
+  {
+    question: "What is the goal of Cardsbolt?",
+    answer:
+      "The goal is to make it easier to find boxed TCG products at the best current shop price while prioritizing reliability and a smoother buying experience.",
+  },
+  {
+    question: "Will Cardsbolt stay free?",
+    answer:
+      "Yes. The core experience of picking a product, seeing only in-stock listings, and finding the cheapest shop will stay free.",
+  },
+  {
+    question: "What features could be paid in the future?",
+    answer:
+      "Convenience features, such as stock alerts and price-drop notifications, may become paid options while core comparison stays free.",
+  },
+];
+
 const ProductPage = (props: ProductPageProps) => {
   const [userCountry, setUserCountry] = useState("GB");
   const [allProducts, setAllProducts] = useState<Product>(props.products);
@@ -206,7 +249,7 @@ const ProductPage = (props: ProductPageProps) => {
             </Link>{" "}
           </div>
 
-          <section className="mb-10">
+          <section className="min-h-[55dvh]">
             <div className="mb-2 grid grid-cols-3 items-center rounded-md border border-slate-700/80 bg-slate-900/50 px-4">
               <div className="col-span-2 justify-center py-3">
                 <h1 className="mt-2 mb-4 text-sm font-bold text-white md:text-2xl">
@@ -346,6 +389,27 @@ const ProductPage = (props: ProductPageProps) => {
                 </li>
               ))}
             </ul>
+          </section>
+
+          <section id="faq" className="mx-auto mt-20 max-w-4xl pb-12">
+            <h2 className="mb-6 text-3xl font-semibold text-white md:text-4xl">
+              Frequently asked questions
+            </h2>
+
+            <div className="space-y-3">
+              {faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="group rounded-md border border-slate-700/80 bg-slate-900/50"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left font-semibold text-slate-100 marker:content-none">
+                    <span>{faq.question}</span>
+                    <FiChevronDown className="shrink-0 text-slate-400 transition group-open:rotate-180" />
+                  </summary>
+                  <p className="px-5 pb-5 text-slate-300">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
           </section>
         </main>
       </div>

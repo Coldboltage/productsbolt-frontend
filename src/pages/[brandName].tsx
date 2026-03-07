@@ -92,7 +92,7 @@ export default function Home(props: HomeProps) {
         </header>
 
         <main className="px-5 pt-10 md:px-8">
-          <section className="mb-10 grid min-h-[100dvh] content-start">
+          <section className="mb-10 grid min-h-[55dvh] content-start">
             <div>
               <h1 className="pb-4 text-3xl font-semibold text-white md:text-4xl">
                 Products List
@@ -136,7 +136,7 @@ export default function Home(props: HomeProps) {
             </ul>
           </section>
 
-          <section id="faq" className="mx-auto max-w-4xl mt-20">
+          <section id="faq" className="mx-auto mt-20 max-w-4xl pb-12">
             <h2 className="mb-6 text-3xl font-semibold text-white md:text-4xl">
               Frequently asked questions
             </h2>

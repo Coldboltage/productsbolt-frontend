@@ -1,7 +1,8 @@
 import Footer from "@/components/Footer";
 import Header from "./Header";
+import { ReactNode } from "react";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     // <div className="absolute inset-0 ">
     //   <Header />

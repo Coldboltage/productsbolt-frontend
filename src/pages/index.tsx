@@ -39,7 +39,7 @@ export default function Home() {
         </header>
 
         <main className="px-5 md:px-8">
-          <section className="flex min-h-[82vh] items-center py-16">
+          <section className="flex min-h-dvh items-center">
             <div className="max-w-3xl">
               <p className="mb-5 text-sm font-medium tracking-[0.22em] text-cyan-300 uppercase">
                 Cardsbolt beta
@@ -78,14 +78,14 @@ export default function Home() {
                 Why Cardsbolt exists
               </h2>
               <p className="text-lg text-slate-300">
-                Search engines can help you find a listing, but they do not do
-                a good job showing if it is the cheapest option or even in
-                stock. Cardsbolt focuses on that exact problem.
+                Search engines can help you find a listing, but they do not do a
+                good job showing if it is the cheapest option or even in stock.
+                Cardsbolt focuses on that exact problem.
               </p>
               <p className="text-lg text-slate-300">
-                We want to make it easier to find TCG boxed products at the
-                best current shop price, while keeping the buying experience
-                smoother and more reliable.
+                We want to make it easier to find TCG boxed products at the best
+                current shop price, while keeping the buying experience smoother
+                and more reliable.
               </p>
             </div>
 

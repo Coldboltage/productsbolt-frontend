@@ -1,4 +1,3 @@
-import Nav from "@/components/Nav";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -47,10 +46,6 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
 
       <div className="relative mx-auto max-w-6xl pb-24">
-        <header>
-          <Nav />
-        </header>
-
         <main className="px-5 md:px-8">
           <section className="flex min-h-[100dvh] items-center py-16">
             <div className="max-w-3xl">

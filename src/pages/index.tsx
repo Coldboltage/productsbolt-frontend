@@ -1,6 +1,50 @@
 import Nav from "@/components/Nav";
 import Head from "next/head";
 import Link from "next/link";
+import { FiChevronDown } from "react-icons/fi";
+
+const faqs = [
+  {
+    question: "What does Cardsbolt do?",
+    answer:
+      "Cardsbolt is a TCG price comparison site that compares popular and lesser-known shops to help you find the cheapest boxes currently in stock.",
+  },
+  {
+    question: "How often do prices and stock update?",
+    answer:
+      "Prices and availability are checked periodically throughout the day. As soon as we detect an update from a shop, listings refresh automatically.",
+  },
+  {
+    question: "Why not just use search engines?",
+    answer:
+      "Search engines can help you discover products, but they usually do not tell you if the listing is the cheapest or currently in stock. Cardsbolt is built specifically for that.",
+  },
+  {
+    question: "How does currency conversion work?",
+    answer:
+      "Depending on your region, Cardsbolt applies currency conversion and rough tax estimates so listings are sorted closer to what you would really pay.",
+  },
+  {
+    question: "What shops are included?",
+    answer:
+      "Cardsbolt tracks both widely known stores and smaller shops that are often hard to discover through normal search results.",
+  },
+  {
+    question: "What is the goal of Cardsbolt?",
+    answer:
+      "The goal is to make it easier to find boxed TCG products at the best current shop price while prioritizing reliability and a smoother buying experience.",
+  },
+  {
+    question: "Will Cardsbolt stay free?",
+    answer:
+      "Yes. The core experience of picking a product, seeing only in-stock listings, and finding the cheapest shop will stay free.",
+  },
+  {
+    question: "What features could be paid in the future?",
+    answer:
+      "Convenience features, such as stock alerts and price-drop notifications, may become paid options while core comparison stays free.",
+  },
+];
 
 const highlights = [
   {
@@ -22,7 +66,7 @@ const highlights = [
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl pb-20">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <Head>
         <title>Cardsbolt: Cheapest TCG Boxes</title>
         <meta
@@ -31,96 +75,69 @@ export default function Home() {
         />
       </Head>
 
-      <header>
-        <Nav />
-      </header>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
 
-      <main className="px-5">
-        <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950 px-6 py-16 md:px-12 md:py-24">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.2),transparent_45%)]" />
-          <div className="relative mx-auto max-w-3xl text-center">
-            <p className="mb-4 inline-flex rounded-full border border-cyan-300/30 px-3 py-1 text-xs tracking-wide text-cyan-300 uppercase">
-              Cardsbolt beta
-            </p>
-            <h1 className="pb-5 text-4xl font-bold text-white md:text-6xl">
-              Cheapest TCG Boxes
-            </h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-300 md:text-xl">
-              Find the cheapest TCG boxes around the world.
-            </p>
-            <p className="mx-auto mt-6 max-w-2xl text-slate-400">
-              Cardsbolt compares many of the most popular and relatively
-              unknown shops to find the lowest in-stock prices, refreshed
-              automatically.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/products"
-                className="rounded-md bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
-              >
-                Browse tracked products
-              </Link>
-              <a
-                href="#goal"
-                className="rounded-md border border-slate-600 px-5 py-3 font-semibold text-slate-100 transition hover:border-slate-400"
-              >
-                Read the goal
-              </a>
+      <div className="relative mx-auto max-w-6xl pb-24">
+        <header>
+          <Nav />
+        </header>
+
+        <main className="px-5 md:px-8">
+          <section className="flex min-h-dvh items-center py-16">
+            <div className="max-w-3xl">
+              <p className="mb-5 text-sm font-medium tracking-[0.22em] text-cyan-300 uppercase">
+                Cardsbolt Alpha
+              </p>
+              <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl">
+                Cheapest TCG Boxes.
+              </h1>
+              <p className="mt-6 max-w-2xl text-xl text-slate-300 md:text-2xl">
+                Find the cheapest TCG boxes around the world.
+              </p>
+              <p className="mt-6 max-w-2xl text-base text-slate-400 md:text-lg">
+                Cardsbolt compares popular and relatively unknown shops to find
+                the lowest in-stock prices, refreshed automatically.
+              </p>
+
+              <div className="mt-10 flex flex-col items-start gap-3">
+                <Link
+                  href="/products"
+                  className="rounded-md bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
+                >
+                  Browse tracked products
+                </Link>
+                <a
+                  href="#faq"
+                  className="text-sm font-semibold text-slate-300 underline decoration-slate-500 underline-offset-4 transition hover:text-white"
+                >
+                  Read FAQs
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="mt-14 grid gap-6 md:grid-cols-3">
-          {highlights.map((highlight) => (
-            <article
-              key={highlight.title}
-              className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6"
-            >
-              <h2 className="text-xl font-semibold text-white">
-                {highlight.title}
-              </h2>
-              <p className="mt-3 text-slate-300">{highlight.description}</p>
-            </article>
-          ))}
-        </section>
+          <section id="faq" className="mx-auto max-w-4xl pb-12">
+            <h2 className="mb-6 text-3xl font-semibold text-white md:text-4xl">
+              Frequently asked questions
+            </h2>
 
-        <section className="mt-16 grid gap-8 rounded-3xl border border-slate-800 bg-slate-950/60 p-6 md:grid-cols-2 md:p-10">
-          <div>
-            <h2 className="text-3xl font-bold text-white">Why Cardsbolt?</h2>
-            <p className="mt-4 text-slate-300">
-              Search engines can show products, but they do not reliably tell
-              you if the listing is truly the cheapest or even in stock.
-              Cardsbolt is focused on exactly that: giving you the cheapest
-              in-stock result from stores you can buy from right now.
-            </p>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold text-white">The goal</h2>
-            <p id="goal" className="mt-4 text-slate-300">
-              We want to make it easier to find TCG boxed products at the best
-              current shop price. By tracking shops instead of person-to-person
-              marketplaces, we prioritize buyer protection, consistency, and a
-              smoother checkout experience.
-            </p>
-          </div>
-        </section>
-
-        <section className="mt-12 rounded-3xl border border-emerald-400/20 bg-emerald-950/20 p-6 md:p-10">
-          <h2 className="text-3xl font-bold text-white">
-            Will this stay a free service?
-          </h2>
-          <p className="mt-4 text-slate-200">
-            Yes. The core Cardsbolt experience—choosing a product, seeing only
-            available listings, and finding the cheapest shop—will remain free.
-          </p>
-          <p className="mt-4 text-slate-300">
-            As we add more products and stores, that principle will not change.
-            Optional paid features will focus on convenience (for example,
-            notifications when a product becomes available or drops to a target
-            price), not on restricting core price comparison.
-          </p>
-        </section>
-      </main>
+            <div className="space-y-3">
+              {faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="group rounded-md border border-slate-700/80 bg-slate-900/50"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left font-semibold text-slate-100 marker:content-none">
+                    <span>{faq.question}</span>
+                    <FiChevronDown className="shrink-0 text-slate-400 transition group-open:rotate-180" />
+                  </summary>
+                  <p className="px-5 pb-5 text-slate-300">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

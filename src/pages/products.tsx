@@ -9,64 +9,67 @@ interface HomeProps {
 
 export default function Home(props: HomeProps) {
   return (
-    <div className={` max-w-6xl mx-auto`}>
-      <header>
-        <Nav />
-      </header>
+    <div className="relative min-h-[100dvh] overflow-hidden bg-slate-950 text-slate-100">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
 
-      <main className=" p-5 mt-10">
-        <section
-          className="grid mb-10
-"
-        >
-          <div>
-            <h1 className="text-2xl justify-center pb-4">Products List</h1>
-            <p className="text mb-10">
-              List of all the products currently with Cardsbolt
-            </p>
-          </div>
-          <ul className="grid grid-cols-1 md:grid-cols-4 text-center gap-5">
-            {props.products.map((product: Product) => {
-              return (
-                <li key={product.id} className="h-full">
-                  <Link
-                    href={`/product/${product.urlSafeName}`}
-                    className="block h-full"
-                  >
-                    <div className="flex flex-col h-full rounded-lg border border-white/10 bg-gray-600/50 p-4 font-extrabold">
-                      <div className="h-40 flex items-center justify-center mb-4">
-                        <Image
-                          src={product.imageUrl}
-                          alt={product.name}
-                          width={160}
-                          height={160}
-                          sizes="160px"
-                          className="object-contain"
-                        />
+      <div className="relative mx-auto max-w-6xl pb-24">
+        <header>
+          <Nav />
+        </header>
+
+        <main className="px-5 pt-10 md:px-8">
+          <section className="mb-10 grid">
+            <div>
+              <h1 className="pb-4 text-3xl font-semibold text-white md:text-4xl">
+                Products List
+              </h1>
+              <p className="mb-10 text-slate-300 md:text-lg">
+                List of all the products currently with Cardsbolt
+              </p>
+            </div>
+            <ul className="grid grid-cols-1 gap-5 text-center md:grid-cols-4">
+              {props.products.map((product: Product) => {
+                return (
+                  <li key={product.id} className="h-full">
+                    <Link
+                      href={`/product/${product.urlSafeName}`}
+                      className="block h-full"
+                    >
+                      <div className="flex h-full flex-col rounded-lg border border-slate-700/80 bg-slate-900/50 p-4 font-semibold text-slate-100 transition hover:border-cyan-300/60 hover:bg-slate-900/70">
+                        <div className="mb-4 flex h-40 items-center justify-center">
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name}
+                            width={160}
+                            height={160}
+                            sizes="160px"
+                            className="object-contain"
+                          />
+                        </div>
+
+                        <p className="mt-auto text-center">{product.name}</p>
                       </div>
-
-                      <p className="text-center mt-auto">{product.name}</p>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-        <section>
-          <div className="hidden md:grid gap-6 grid-cols-3 text-center">
-            <div>
-              <p>Find the cheapest shop with the product</p>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+          <section>
+            <div className="hidden grid-cols-3 gap-6 text-center text-slate-300 md:grid">
+              <div className="rounded-md border border-slate-700/80 bg-slate-900/40 p-4">
+                <p>Find the cheapest shop with the product</p>
+              </div>
+              <div className="rounded-md border border-slate-700/80 bg-slate-900/40 p-4">
+                <p>Updates every product within 2 hours</p>
+              </div>
+              <div className="rounded-md border border-slate-700/80 bg-slate-900/40 p-4">
+                <p>High priority products every 5 mins</p>
+              </div>
             </div>
-            <div>
-              <p>Updates every product within 2 hours</p>
-            </div>
-            <div>
-              <p>High priority products every 5 mins</p>
-            </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

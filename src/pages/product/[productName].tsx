@@ -11,6 +11,7 @@ import {
 import { TAX_RATES } from "@/tax.constant";
 import Head from "next/head";
 import { FaChevronRight } from "react-icons/fa";
+import { FiChevronDown } from "react-icons/fi";
 
 interface WebPage {
   id: string;
@@ -162,7 +163,7 @@ const ProductPage = (props: ProductPageProps) => {
   // console.log(adjustedProductPrices);
 
   return (
-    <div className={` max-w-6xl mx-auto`}>
+    <div className="relative min-h-[100dvh] overflow-hidden bg-slate-950 text-slate-100">
       <Head>
         <title>
           {props.products.productName} from{" "}
@@ -184,77 +185,86 @@ const ProductPage = (props: ProductPageProps) => {
         />
       </Head>
 
-      <header>
-        <Nav />
-      </header>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
 
-      <main className=" md:p-5 md:mt-10">
-        <div className="flex items-center gap-2 mb-2">
-          <Link href={`/`}>Home</Link>
-          <FaChevronRight />
-          <Link href={`/${props.products.productUrlSafeName}`}>
-            {props.products.productBrand}
-          </Link>{" "}
-        </div>
+      <div className="relative mx-auto max-w-6xl pb-24">
+        <header>
+          <Nav />
+        </header>
 
-        <section className="mb-10">
-          <div className="grid grid-cols-3 bg-gray-800/20 px-4 mb-2 items-center">
-            <div className="justify-center py-3 col-span-2">
-              <h1 className="text-sm md:text-2xl mb-4 font-bold mt-2">
-                {props.products.productName}
-              </h1>
-              <p className="text-xs">
-                The cheapest {props.products.productName} currently available is{" "}
-                {formatCurrency(
-                  +pagesSorted[0].price,
-                  pagesSorted[0].shop.currency,
-                  pagesSorted[0].shop.country,
-                )}{" "}
-                from {pagesSorted[0].shop.name} in {pagesSorted[0].shop.country}
-                .
-              </p>
-              <p className="hidden text-xs md:inline-block mt-2">
-                Cardsbolt compares prices for trading card game booster boxes
-                across UK and international TCG retailers so players can quickly
-                find the cheapest place to buy booster boxes online.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <Image
-                src={props.products.productImage}
-                alt={`Image of: ${props.products.productName}`}
-                width={160}
-                height={160}
-                sizes="160px"
-                className="object-contain p-2"
-              />
-            </div>
+        <main className="px-5 pt-10 md:px-8">
+          <div className="mb-2 flex items-center gap-2 text-sm text-slate-300">
+            <Link href={`/`} className="hover:text-white">
+              Home
+            </Link>
+            <FaChevronRight />
+            <Link
+              href={`/${props.products.productUrlSafeName}`}
+              className="hover:text-white"
+            >
+              {props.products.productBrand}
+            </Link>{" "}
           </div>
-          <ul className="divide-y divide-gray-700/70">
-            {/* Header */}
-            <li className="bg-gray-800/60">
-              <div className="grid text-xs md:text-lg grid-cols-4 md:grid-cols-4 text-center px-2 py-3 font-semibold text-gray-400">
-                <p>Shop Name</p>
-                <p>Location</p>
-                {/* <p>Euro</p> */}
-                <p>Original Price</p>
-                <p>Euro Price</p>
-                {/* <p>Taxed Original Price</p> */}
-              </div>
-            </li>
-            <li className="flex justify-center text-center">
-              <p className="text-[11px] text-gray-400/70 my-2 italic">
-                Sorted by estimated total for your location. EUR prices use
-                hourly exchange rates. VAT, shipping and retailer fees may apply
-                at checkout.
-              </p>
-            </li>
 
-            {pagesSorted.map((webpage: WebPage) => (
-              <li
-                key={webpage.id}
-                className="
+          <section className="mb-10">
+            <div className="mb-2 grid grid-cols-3 items-center rounded-md border border-slate-700/80 bg-slate-900/50 px-4">
+              <div className="col-span-2 justify-center py-3">
+                <h1 className="mt-2 mb-4 text-sm font-bold text-white md:text-2xl">
+                  {props.products.productName}
+                </h1>
+                <p className="text-xs text-slate-300">
+                  The cheapest {props.products.productName} currently available
+                  is{" "}
+                  {formatCurrency(
+                    +pagesSorted[0].price,
+                    pagesSorted[0].shop.currency,
+                    pagesSorted[0].shop.country,
+                  )}{" "}
+                  from {pagesSorted[0].shop.name} in{" "}
+                  {pagesSorted[0].shop.country}.
+                </p>
+                <p className="mt-2 hidden text-xs text-slate-400 md:inline-block">
+                  Cardsbolt compares prices for trading card game booster boxes
+                  across UK and international TCG retailers so players can
+                  quickly find the cheapest place to buy booster boxes online.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center">
+                <Image
+                  src={props.products.productImage}
+                  alt={`Image of: ${props.products.productName}`}
+                  width={160}
+                  height={160}
+                  sizes="160px"
+                  className="object-contain p-2"
+                />
+              </div>
+            </div>
+            <ul className="divide-y divide-slate-700/70 overflow-hidden rounded-md border border-slate-700/80">
+              {/* Header */}
+              <li className="bg-slate-900/70">
+                <div className="grid grid-cols-4 px-2 py-3 text-center text-xs font-semibold text-slate-300 md:grid-cols-4 md:text-lg">
+                  <p>Shop Name</p>
+                  <p>Location</p>
+                  {/* <p>Euro</p> */}
+                  <p>Original Price</p>
+                  <p>Euro Price</p>
+                  {/* <p>Taxed Original Price</p> */}
+                </div>
+              </li>
+              <li className="flex justify-center bg-slate-900/40 text-center">
+                <p className="my-2 text-[11px] text-slate-400/80 italic">
+                  Sorted by estimated total for your location. EUR prices use
+                  hourly exchange rates. VAT, shipping and retailer fees may
+                  apply at checkout.
+                </p>
+              </li>
+
+              {pagesSorted.map((webpage: WebPage) => (
+                <li
+                  key={webpage.id}
+                  className="
                 odd:bg-slate-900/60
                 even:bg-slate-800/40
                 hover:bg-slate-700/60
@@ -262,59 +272,59 @@ const ProductPage = (props: ProductPageProps) => {
                  text-[12px]
                  md:text-sm
                 "
-              >
-                <Link
-                  href={webpage.url}
-                  className="grid text-center md:text-left grid-cols-4 md:grid-cols-4 px-2 py-2 items-center"
                 >
-                  <div className="pl-2">{webpage.shop.name}</div>
-                  <div className="text-xs pl-2">
-                    <span className="hidden md:inline-block">
-                      {webpage.shop.city} - {webpage.shop.province} -
-                    </span>{" "}
-                    <span>
-                      {" "}
-                      {webpage.shop.country} {` `}
-                      <ReactCountryFlag
-                        countryCode={webpage.shop.country}
-                        svg
-                      />
-                    </span>
-                  </div>
-                  <div className="font-semibold md:block pl-2">
-                    <span>
-                      {" "}
-                      {formatCurrency(
-                        +webpage.price,
-                        webpage.shop.currency,
-                        webpage.shop.country,
-                      )}
-                      {"  "}
-                    </span>
+                  <Link
+                    href={webpage.url}
+                    className="grid text-center md:text-left grid-cols-4 md:grid-cols-4 px-2 py-2 items-center"
+                  >
+                    <div className="pl-2">{webpage.shop.name}</div>
+                    <div className="text-xs pl-2">
+                      <span className="hidden md:inline-block">
+                        {webpage.shop.city} - {webpage.shop.province} -
+                      </span>{" "}
+                      <span>
+                        {" "}
+                        {webpage.shop.country} {` `}
+                        <ReactCountryFlag
+                          countryCode={webpage.shop.country}
+                          svg
+                        />
+                      </span>
+                    </div>
+                    <div className="font-semibold md:block pl-2">
+                      <span>
+                        {" "}
+                        {formatCurrency(
+                          +webpage.price,
+                          webpage.shop.currency,
+                          webpage.shop.country,
+                        )}
+                        {"  "}
+                      </span>
 
-                    <span className="text-[10px]  text-gray-200/90">
-                      {webpage.shop.vatShown
-                        ? "VAT included"
-                        : "Tax not included"}
-                    </span>
-                  </div>
-                  <div className="pl-2 flex flex-col sm:inline-block ">
-                    <span className="font-semibold mr-1">
-                      €{webpage.euroPrice}
-                    </span>
-                    <span className="text-[8px] sm:text-[10px]  text-gray-400/70">
-                      {" "}
-                      {userCountry &&
-                        userCurrency !== webpage.shop.currency &&
-                        `Est. €${+webpage.adjustedPriceEuro!} additional fees may apply`}
-                    </span>
-                  </div>
+                      <span className="text-[10px] text-slate-300/90">
+                        {webpage.shop.vatShown
+                          ? "VAT included"
+                          : "Tax not included"}
+                      </span>
+                    </div>
+                    <div className="pl-2 flex flex-col sm:inline-block ">
+                      <span className="font-semibold mr-1">
+                        €{webpage.euroPrice}
+                      </span>
+                      <span className="text-[8px] text-slate-400/80 sm:text-[10px]">
+                        {" "}
+                        {userCountry &&
+                          userCurrency !== webpage.shop.currency &&
+                          `Est. €${+webpage.adjustedPriceEuro!} additional fees may apply`}
+                      </span>
+                    </div>
 
-                  {/* <div className="font-semibold">
+                    {/* <div className="font-semibold">
                     €{webpage.adjustedPriceEuro} / €
                     {webpage.adjustedPriceEuroUpper}
                   </div> */}
-                  {/* <div className="font-semibold hidden md:block">
+                    {/* <div className="font-semibold hidden md:block">
                     {formatCurrency(
                       webpage.adjustedPrice ?? 0,
                       webpage.shop.currency,
@@ -332,12 +342,13 @@ const ProductPage = (props: ProductPageProps) => {
                       </>
                     )}
                   </div>{" "} */}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </main>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </main>
+      </div>
     </div>
   );
 };

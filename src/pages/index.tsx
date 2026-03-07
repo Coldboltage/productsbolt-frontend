@@ -83,10 +83,10 @@ export default function Home() {
         </header>
 
         <main className="px-5 md:px-8">
-          <section className="flex min-h-[82vh] items-center py-16">
+          <section className="flex min-h-dvh items-center py-16">
             <div className="max-w-3xl">
               <p className="mb-5 text-sm font-medium tracking-[0.22em] text-cyan-300 uppercase">
-                Cardsbolt beta
+                Cardsbolt Alpha
               </p>
               <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl">
                 Cheapest TCG Boxes.

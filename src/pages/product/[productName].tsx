@@ -352,7 +352,7 @@ const ProductPage = (props: ProductPageProps) => {
                         {" "}
                         {userCountry &&
                           userCurrency !== webpage.shop.currency &&
-                          `Est. €${+webpage.adjustedPriceEuro!} additional fees may apply`}
+                          `Est. €${+webpage.adjustedPriceEuro!} incl. VAT, excl. delivery`}
                       </span>
                     </div>
 

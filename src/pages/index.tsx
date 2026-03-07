@@ -46,6 +46,24 @@ const faqs = [
   },
 ];
 
+const highlights = [
+  {
+    title: "Automatic checkups",
+    description:
+      "Cardsbolt updates price and availability throughout the day. As soon as a shop changes, listings refresh automatically.",
+  },
+  {
+    title: "Currency conversion",
+    description:
+      "We estimate taxes and convert currencies by region so results are sorted closer to what you would actually pay.",
+  },
+  {
+    title: "Many shops",
+    description:
+      "We track popular and lesser-known stores, giving smaller shops visibility while helping you discover better prices.",
+  },
+];
+
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">

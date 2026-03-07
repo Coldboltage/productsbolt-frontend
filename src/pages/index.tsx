@@ -36,7 +36,7 @@ const detailSections = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <div className="min-h-screen overflow-hidden text-slate-100">
       <Head>
         <title>Cardsbolt: Cheapest TCG Boxes</title>
         <meta
@@ -45,15 +45,13 @@ export default function Home() {
         />
       </Head>
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
-
-      <div className="relative mx-auto max-w-6xl pb-24">
-        <header>
+      <div className="mx-auto max-w-6xl pb-24">
+        {/* <header>
           <Nav />
-        </header>
+        </header> */}
 
         <main className="px-5 md:px-8">
-          <section className="flex min-h-[100dvh] items-center py-16">
+          <section className="flex min-h-dvh items-center py-16">
             <div className="max-w-3xl">
               <p className="mb-5 text-sm font-medium tracking-[0.22em] text-cyan-300 uppercase">
                 Cardsbolt Alpha
@@ -119,7 +117,7 @@ export default function Home() {
 
             <article className="relative mb-12 overflow-hidden rounded-2xl bg-slate-900/60 p-6 ring-1 ring-cyan-300/30 md:p-8">
               <div className="pointer-events-none absolute -top-16 -right-10 h-40 w-40 rounded-full bg-cyan-400/20 blur-2xl" />
-              <div className="relative flex flex-col gap-5">
+              <div className="flex flex-col gap-5">
                 <p className="text-xs font-semibold tracking-[0.22em] text-cyan-300 uppercase">
                   Why Cardsbolt
                 </p>
@@ -159,7 +157,7 @@ export default function Home() {
           </section>
         </main>
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </div>
   );
 }

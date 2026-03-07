@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa";
 
 const Nav = () => {
   return (
-    <nav className={`grid grid-cols-3 p-5 justify-between`}>
+    <nav className={`grid grid-cols-3 p-5 md:px-8 justify-between`}>
       <div className={`flex gap-2 md:gap-5 items-center col-span-3`}>
         <Link className="pr-3 border-line" href="/">
           <FaHome className="h-5 w-auto md:h-5" size={28} />{" "}

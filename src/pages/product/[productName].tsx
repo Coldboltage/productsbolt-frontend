@@ -205,7 +205,7 @@ const ProductPage = (props: ProductPageProps) => {
   // console.log(adjustedProductPrices);
 
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-slate-950 text-slate-100">
+    <div className="relative min-h-[100dvh] overflow-hidden  text-slate-100">
       <Head>
         <title>
           {props.products.productName} from{" "}
@@ -226,8 +226,6 @@ const ProductPage = (props: ProductPageProps) => {
           dangerouslySetInnerHTML={{ __html: props.productJsonLd }}
         />
       </Head>
-
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.18),transparent_45%),linear-gradient(180deg,#020617_0%,#020617_45%,#0b1120_100%)]" />
 
       <div className="relative mx-auto max-w-6xl pb-24">
         <main className="px-5 pt-10 md:px-8">

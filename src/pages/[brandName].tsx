@@ -6,6 +6,7 @@ import Head from "next/head";
 import { FiChevronDown } from "react-icons/fi";
 import { FaChevronRight } from "react-icons/fa";
 import { IoMdList } from "react-icons/io";
+import BreadCrumbs from "@/components/BreadCrumbs";
 
 interface HomeProps {
   products: Product[];
@@ -90,7 +91,15 @@ export default function Home(props: HomeProps) {
         <main className="px-5 pt-10 md:px-8">
           <section className="mb-10 grid min-h-[55dvh] content-start">
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm text-slate-300">
+              <BreadCrumbs
+                breadcrumbElements={[
+                  {
+                    link: "",
+                    text: props.brandInfo.name,
+                  },
+                ]}
+              />
+              {/* <div className="mb-4 flex items-center gap-2 text-sm text-slate-300">
                 <Link href={`/brand`} className="hover:text-white">
                   <IoMdList size={20} />
                 </Link>
@@ -98,7 +107,7 @@ export default function Home(props: HomeProps) {
                 <p className="text-gray-400  disable">
                   {props.brandInfo.name}
                 </p>{" "}
-              </div>
+              </div> */}
               <h1 className="pb-4 text-3xl font-semibold text-white md:text-4xl">
                 Products List
               </h1>

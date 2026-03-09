@@ -12,6 +12,7 @@ import Head from "next/head";
 import { FaChevronRight } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
 import { IoMdList } from "react-icons/io";
+import BreadCrumbs from "@/components/BreadCrumbs";
 
 interface WebPage {
   id: string;
@@ -206,7 +207,7 @@ const ProductPage = (props: ProductPageProps) => {
   // console.log(adjustedProductPrices);
 
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden  text-slate-100">
+    <div className="relative min-h-dvh overflow-hidden  text-slate-100">
       <Head>
         <title>
           {props.products.productName} from{" "}
@@ -230,9 +231,22 @@ const ProductPage = (props: ProductPageProps) => {
 
       <div className="relative mx-auto max-w-6xl pb-24">
         <main className="px-5 pt-10 md:px-8">
-          <div className="mb-4  flex items-center gap-2 text-sm text-slate-300">
+          <BreadCrumbs
+            breadcrumbElements={[
+              {
+                link: props.products.productUrlSafeName,
+                text: props.products.productBrand,
+              },
+              {
+                link: "",
+                text: props.products.productName,
+              },
+            ]}
+          />
+
+          {/* <div className="mb-4 flex items-center  gap-0.5 md:gap-2 text-[10px] md:text-sm text-slate-300">
             <Link href={`/brand`} className="hover:text-white">
-              <IoMdList size={20} />
+              <IoMdList size={16} />
             </Link>
             <FaChevronRight />
             <Link
@@ -245,7 +259,7 @@ const ProductPage = (props: ProductPageProps) => {
             <p className="text-gray-300/80 disable">
               {props.products.productName}
             </p>{" "}
-          </div>
+          </div> */}
 
           <section className="min-h-[55dvh]">
             <div className="mb-2 grid grid-cols-3 items-center rounded-md border border-slate-700/80 bg-slate-900/50 px-4">

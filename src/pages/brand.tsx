@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import { FiChevronDown } from "react-icons/fi";
+import { IoMdList } from "react-icons/io";
 
 interface HomeProps {
   products: Product[];
@@ -79,7 +80,12 @@ export default function Home(props: HomeProps) {
         <main className="px-5 pt-10 md:px-8">
           <section className="mb-10 grid min-h-[55dvh] content-start">
             <div>
-              <h1 className="pb-4 text-3xl font-semibold text-white md:text-4xl">
+              <div className="mb-4 flex items-center gap-2 text-sm">
+                <p className="hover:text-white">
+                  <IoMdList size={20} />
+                </p>
+              </div>
+              <h1 className="pb4 text-3xl font-semibold text-white md:text-4xl">
                 TCG Games List
               </h1>
               <p className="mb-10 text-slate-300 md:text-lg">

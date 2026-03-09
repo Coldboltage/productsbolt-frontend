@@ -241,6 +241,10 @@ const ProductPage = (props: ProductPageProps) => {
             >
               {props.products.productBrand}
             </Link>{" "}
+            <FaChevronRight />
+            <p className="text-gray-300/80 disable">
+              {props.products.productName}
+            </p>{" "}
           </div>
 
           <section className="min-h-[55dvh]">

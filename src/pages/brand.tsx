@@ -1,11 +1,8 @@
-import Nav from "@/components/Nav";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import { FiChevronDown } from "react-icons/fi";
-import { FaChevronRight } from "react-icons/fa";
-import { IoMdList } from "react-icons/io";
 
 interface HomeProps {
   products: Product[];
@@ -63,26 +60,18 @@ export default function Home(props: HomeProps) {
   return (
     <div className="relative min-h-dvh overflow-hidden text-slate-100">
       <Head>
-        <title>{props.brandInfo.name} Products Page | Cardsbolt</title>
+        <title>Brands Page | Cardsbolt</title>
         <meta
           name="description"
-          content={
-            props.brandInfo
-              ? `Compare live prices for ${props.brandInfo.name} across trusted TCG retailers. VAT-adjusted EUR pricing with real-time exchange rates.`
-              : "This product is not yet indexed on Productsbolt. Check back soon for price comparisons."
-          }
+          content={`All the brands that we track with Cardsbolt`}
         />
-        <meta
+        {/* <meta
           property="og:title"
           content={props.brandInfo?.name ?? "Productsbolt"}
-        />
+        /> */}
         <meta
           property="og:description"
-          content={
-            props.brandInfo
-              ? `Find the best price for ${props.brandInfo.name} across multiple stores.`
-              : "Trading card game price comparison platform."
-          }
+          content={`All the brands that we track with Cardsbolt`}
         />
       </Head>
 
@@ -90,52 +79,32 @@ export default function Home(props: HomeProps) {
         <main className="px-5 pt-10 md:px-8">
           <section className="mb-10 grid min-h-[55dvh] content-start">
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm text-slate-300">
-                <Link href={`/brand`} className="hover:text-white">
-                  <IoMdList size={20} />
-                </Link>
-                <FaChevronRight />
-                <p className="text-gray-400  disable">
-                  {props.brandInfo.name}
-                </p>{" "}
-              </div>
               <h1 className="pb-4 text-3xl font-semibold text-white md:text-4xl">
-                Products List
+                TCG Games List
               </h1>
               <p className="mb-10 text-slate-300 md:text-lg">
-                <span>All products found for </span>
-                <span className="font-extrabold italic">{`${props.brandInfo.name} `}</span>
-                <span>with an active listing</span>
+                <span>All TCGs found for Cardsbolt</span>
               </p>
             </div>
-
-            <ul className="grid grid-cols-2 gap-5 text-center md:grid-cols-4">
+            <ul className="grid grid-cols- gap-3 text-center md:grid-cols-2">
               {props.products.map((product: Product) => {
                 return (
                   <li key={product.id} className="h-full">
                     <Link
-                      href={`/product/${product.urlSafeName}`}
+                      href={`/${product.urlSafeName}`}
                       className="block h-full"
                     >
-                      <div className="flex h-full flex-col gap-2 rounded-lg border border-slate-700/80 bg-slate-900/50 p-2 md:p-4 font-semibold text-slate-100 transition hover:border-cyan-300/60 hover:bg-slate-900/70">
-                        <div className="mb-1 flex items-center justify-center">
+                      <div className="min-h-28 justify-center flex h-full flex-col gap-2 rounded-lg border border-slate-700/80 bg-slate-900/50 p-3 md:p-3 font-semibold text-slate-100 transition hover:border-cyan-300/60 hover:bg-slate-900/70">
+                        <div className="flex items-center justify-center">
                           <Image
-                            src={product.imageUrl}
+                            src={product.mainLogo}
                             alt={product.name}
-                            width={160}
+                            width={220}
                             height={1}
                             sizes="160px"
                             className="object-contain"
                           />
                         </div>
-
-                        <p className="mt-auto text-center text-xs md:text-base">
-                          {product.name}
-                        </p>
-                        <p className="text-[11px] font-light text-slate-300">
-                          Release Date:{" "}
-                          {new Date(product.releaseDate).toLocaleDateString()}
-                        </p>
                       </div>
                     </Link>
                   </li>
@@ -177,45 +146,28 @@ interface Product {
   brand: string;
   imageUrl: string;
   releaseDate: Date;
+  mainLogo: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const brandName = context.params?.brandName as string;
-  const res = await fetch(
-    `http://${process.env.API_IP}:3000/product/find-all-product-only-by-brand-with-pages/${brandName}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
-      },
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`http://${process.env.API_IP}:3000/brand`, {
+    headers: {
+      Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
     },
-  );
-  const brandInfoResponse = await fetch(
-    `http://${process.env.API_IP}:3000/brand/find-one-by-url-safe-name/${brandName}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY ?? ""}`,
-      },
-    },
-  );
+  });
 
   if (!res.ok) {
     return { props: { products: [] }, revalidate: 3600 };
   }
 
   const products: Product[] = await res.json();
-  const brandInfoJson = await brandInfoResponse.json();
 
   console.log(products[0]);
 
   // console.log(products);
 
   return {
-    props: { products, brandInfo: brandInfoJson },
+    props: { products },
     revalidate: 3600,
   };
 };
-
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [],
-  fallback: "blocking",
-});

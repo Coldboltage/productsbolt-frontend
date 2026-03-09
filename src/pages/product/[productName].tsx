@@ -11,6 +11,7 @@ import { TAX_RATES } from "@/tax.constant";
 import Head from "next/head";
 import { FaChevronRight } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
+import { IoMdList } from "react-icons/io";
 
 interface WebPage {
   id: string;
@@ -229,9 +230,9 @@ const ProductPage = (props: ProductPageProps) => {
 
       <div className="relative mx-auto max-w-6xl pb-24">
         <main className="px-5 pt-10 md:px-8">
-          <div className="mb-2 flex items-center gap-2 text-sm text-slate-300">
-            <Link href={`/`} className="hover:text-white">
-              Home
+          <div className="mb-4  flex items-center gap-2 text-sm text-slate-300">
+            <Link href={`/brand`} className="hover:text-white">
+              <IoMdList size={20} />
             </Link>
             <FaChevronRight />
             <Link

@@ -69,7 +69,7 @@ export default function Home() {
 
               <div className="mt-10 flex flex-col items-start gap-3">
                 <Link
-                  href="/products"
+                  href="/brand"
                   className="rounded-md bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
                 >
                   Browse tracked products

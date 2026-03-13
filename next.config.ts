@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/avif"],
     remotePatterns: [
       {
         protocol: "https",

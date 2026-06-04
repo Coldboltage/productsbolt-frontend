@@ -1,6 +1,7 @@
 import SupportInput from "@/components/SupportInput";
 import SupportTextarea from "@/components/SupportTextarea";
 import { supportInputs } from "@/constants/support.constant";
+import { useIncrement } from "@/hooks/increment.hook";
 import { useFormStatus } from "@/hooks/status.hook";
 import { Status } from "@/types/support.types";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ export default function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const { status, setStatus, resetStatus } = useFormStatus();
+  const { increment, increaseByOne, reduceByOne } = useIncrement();
 
   useEffect(() => {
     if (status === Status.SUCCESS) {
@@ -91,7 +93,7 @@ export default function Contact() {
               Submit
             </button>
           </section>
-          <section>
+          <section className="mb-10">
             {status === Status.SUCCESS && (
               <div className="mt-4 text-green-500">Support message sent.</div>
             )}
@@ -99,6 +101,22 @@ export default function Contact() {
             {status === Status.ERROR && (
               <div className="mt-4 text-red-500">Error found in the form</div>
             )}
+          </section>
+
+          <section className="flex flex-row gap-5 justify-center">
+            <div> Counter: {increment}</div>
+            <button
+              className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+              onClick={() => increaseByOne()}
+            >
+              Increment
+            </button>
+            <button
+              className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+              onClick={() => reduceByOne()}
+            >
+              Reduce
+            </button>
           </section>
         </main>
       </div>

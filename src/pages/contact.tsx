@@ -15,7 +15,7 @@ export default function Contact() {
   useEffect(() => {
     if (status === Status.SUCCESS) {
       console.log("about to fire");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setName("");
         setEmail("");
         setPhone("");
@@ -23,6 +23,8 @@ export default function Contact() {
         setMessage("");
         setStatus(Status.PENDING);
       }, 2000);
+
+      return () => clearTimeout(timer);
     }
   }, [status]);
 
@@ -90,11 +92,11 @@ export default function Contact() {
           </section>
           <section>
             {status === Status.SUCCESS && (
-              <div className="mt-4 text-green-500">Error Message sent.</div>
+              <div className="mt-4 text-green-500">Support message sent.</div>
             )}
 
             {status === Status.ERROR && (
-              <div className="mt-4 text-red-500">Error in form</div>
+              <div className="mt-4 text-red-500">Error found in the form</div>
             )}
           </section>
         </main>

@@ -27,7 +27,7 @@ export default function Contact() {
 
       return () => clearTimeout(timer);
     }
-  }, [status]);
+  }, [status, resetStatus]);
 
   const submitForm = () => {
     console.log("Hello");

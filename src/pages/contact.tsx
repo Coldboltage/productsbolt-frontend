@@ -2,6 +2,7 @@ import SupportInput from "@/components/SupportInput";
 import SupportTextarea from "@/components/SupportTextarea";
 import { supportInputs } from "@/constants/support.constant";
 import { useIncrement } from "@/hooks/increment.hook";
+import useLocalStorage from "@/hooks/local-storage.hook";
 import { useFormStatus } from "@/hooks/status.hook";
 import { Status } from "@/types/support.types";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const { status, setStatus, resetStatus } = useFormStatus();
   const { increment, increaseByOne, reduceByOne } = useIncrement();
+  const { localValue, setLocalValue } = useLocalStorage("name");
 
   useEffect(() => {
     if (status === Status.SUCCESS) {
@@ -103,7 +105,7 @@ export default function Contact() {
             )}
           </section>
 
-          <section className="flex flex-row gap-5 justify-center">
+          <section className="flex flex-row gap-5 justify-center mb-10">
             <div> Counter: {increment}</div>
             <button
               className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
@@ -117,6 +119,24 @@ export default function Contact() {
             >
               Reduce
             </button>
+          </section>
+          <section className="flex flex-row gap-5 justify-center">
+            <div>LocalStorage Example</div>
+            <button className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700">
+              {localValue}
+            </button>
+            <button
+              className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+              onClick={() => setLocalValue("Alan")}
+            >
+              Change
+            </button>
+            <input
+              type="text"
+              className="rounded border px-3 py-2"
+              value={localValue}
+              onChange={(e) => setLocalValue(e.target.value)}
+            />{" "}
           </section>
         </main>
       </div>

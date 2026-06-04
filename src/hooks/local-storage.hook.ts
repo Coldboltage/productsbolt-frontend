@@ -5,17 +5,14 @@ export default function useLocalStorage(key: string) {
   const [localKey] = useState(key);
 
   useEffect(() => {
+    const keyExist = localStorage.getItem(key);
+
+    keyExist ? setLocalValue(keyExist) : setLocalValue("void");
+  }, [key]);
+
+  useEffect(() => {
     localStorage.setItem(localKey, localValue);
   }, [localValue, localKey]);
-
-  const keyExist = localStorage.getItem(key);
-
-  if (keyExist) {
-    setLocalValue(keyExist);
-  } else {
-    localStorage.setItem(key, "void");
-    setLocalValue("void");
-  }
 
   return { localValue, setLocalValue };
 }

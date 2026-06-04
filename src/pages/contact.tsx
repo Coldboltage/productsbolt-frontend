@@ -83,12 +83,12 @@ export default function Contact() {
                 onChange={setMessage}
               />
             </div>
-            <div
+            <button
               onClick={() => submitForm()}
-              className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+              className="w-full flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
             >
-              <div>Submit</div>
-            </div>
+              Submit
+            </button>
           </section>
           <section>
             {status === Status.SUCCESS && (

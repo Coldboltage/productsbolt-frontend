@@ -3,10 +3,12 @@ import React from "react";
 export const SupportInput = ({
   text,
   value,
+  type,
   onChange,
 }: {
   text: string;
   value: string;
+  type: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
@@ -14,7 +16,11 @@ export const SupportInput = ({
       <div className="text-lg">{text}</div>
       <input
         value={value}
+        type={type}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={(e) => {
+          console.log(e.target.validity.valid);
+        }}
         className="
           h-14
           w-full

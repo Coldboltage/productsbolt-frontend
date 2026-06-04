@@ -1,7 +1,8 @@
 import SupportInput from "@/components/SupportInput";
 import SupportTextarea from "@/components/SupportTextarea";
 import { supportInputs } from "@/constants/support.constant";
-import { useState } from "react";
+import { Status } from "@/types/support.types";
+import { useEffect, useState } from "react";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -9,6 +10,30 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<Status>(Status.PENDING);
+
+  useEffect(() => {
+    if (status === Status.SUCCESS) {
+      console.log("about to fire");
+      setTimeout(() => {
+        setName("");
+        setEmail("");
+        setPhone("");
+        setSubject("");
+        setMessage("");
+        setStatus(Status.PENDING);
+      }, 2000);
+    }
+  }, [status]);
+
+  const submitForm = () => {
+    console.log("Hello");
+    if (name && email && phone && subject && message) {
+      setStatus(Status.SUCCESS);
+    } else {
+      setStatus(Status.ERROR);
+    }
+  };
 
   return (
     <div className="min-h-screen overflow-hidden text-slate-100">
@@ -27,31 +52,50 @@ export default function Contact() {
               <SupportInput
                 text={supportInputs[0].text}
                 value={name}
+                type={"text"}
                 onChange={setName}
               />
               <SupportInput
                 text={supportInputs[1].text}
                 value={email}
+                type={"email"}
                 onChange={setEmail}
               />
               <SupportInput
                 text={supportInputs[2].text}
                 value={phone}
+                type={"tel"}
                 onChange={setPhone}
               />
               <SupportInput
                 text={supportInputs[3].text}
                 value={subject}
+                type={"text"}
                 onChange={setSubject}
               />
             </div>
-            <div>
+            <div className="mb-10">
               <SupportTextarea
                 text="Message"
                 value={message}
                 onChange={setMessage}
               />
             </div>
+            <div
+              onClick={() => submitForm()}
+              className="flex justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+            >
+              <div>Submit</div>
+            </div>
+          </section>
+          <section>
+            {status === Status.SUCCESS && (
+              <div className="mt-4 text-green-500">Error Message sent.</div>
+            )}
+
+            {status === Status.ERROR && (
+              <div className="mt-4 text-red-500">Error in form</div>
+            )}
           </section>
         </main>
       </div>

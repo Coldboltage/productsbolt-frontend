@@ -1,6 +1,7 @@
 import SupportInput from "@/components/SupportInput";
 import SupportTextarea from "@/components/SupportTextarea";
 import { supportInputs } from "@/constants/support.constant";
+import { useFormStatus } from "@/hooks/status.hook";
 import { Status } from "@/types/support.types";
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,7 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<Status>(Status.PENDING);
+  const { status, setStatus, resetStatus } = useFormStatus();
 
   useEffect(() => {
     if (status === Status.SUCCESS) {
@@ -21,7 +22,7 @@ export default function Contact() {
         setPhone("");
         setSubject("");
         setMessage("");
-        setStatus(Status.PENDING);
+        resetStatus();
       }, 2000);
 
       return () => clearTimeout(timer);

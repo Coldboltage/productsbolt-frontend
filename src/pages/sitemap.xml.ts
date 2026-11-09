@@ -1,17 +1,5 @@
+import { Product, ProductPageProps } from "@/types/sitemap.products.types";
 import type { GetServerSideProps } from "next";
-
-interface Product {
-  name: string;
-  id: string;
-  urlSafeName: string;
-  brand: string;
-  imageUrl: string;
-  updatedLast: string | Date;
-}
-
-interface ProductPageProps {
-  products: Product[];
-}
 
 function generateSiteMap(products: Product[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>

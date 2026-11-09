@@ -7,11 +7,9 @@ import {
   formatCurrency,
   getCurrencyFromCountry,
 } from "@/utils/format-currency";
-import { TAX_RATES } from "@/tax.constant";
+import { TAX_RATES } from "@/constants/tax.constant";
 import Head from "next/head";
-import { FaChevronRight } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
-import { IoMdList } from "react-icons/io";
 import BreadCrumbs from "@/components/BreadCrumbs";
 
 interface WebPage {

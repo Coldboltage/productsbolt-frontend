@@ -1,10 +1,13 @@
+import { BreadcrumbElementsInterface } from "@/types/breadcrumbElements.types";
 import Link from "next/link";
 import React from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { IoMdList } from "react-icons/io";
 
-const BreadCrumbs = (props: {
-  breadcrumbElements: { link: string; text: string }[];
+const BreadCrumbs = ({
+  breadcrumbElements,
+}: {
+  breadcrumbElements: BreadcrumbElementsInterface[];
 }) => {
   const breadcrumbGap = 2;
   const mdBreadcumbGap = 2;
@@ -16,9 +19,9 @@ const BreadCrumbs = (props: {
       <Link href={`/brand`} className="hover:text-white">
         <IoMdList size={16} />
       </Link>
-      {props.breadcrumbElements.map(
-        (element: { link: string; text: string }, index: number) => {
-          const last = index === props.breadcrumbElements.length - 1;
+      {breadcrumbElements.map(
+        (element: BreadcrumbElementsInterface, index: number) => {
+          const last = index === breadcrumbElements.length - 1;
 
           return (
             <div

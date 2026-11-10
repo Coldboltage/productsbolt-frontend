@@ -207,7 +207,22 @@ const ProductPage = (props: ProductPageProps) => {
   return (
     <div className="relative min-h-dvh overflow-hidden  text-slate-100">
       <Head>
-        <title>
+        {pagesSorted.length > 0 ? (
+          <title>
+            {props.products.productName} from{" "}
+            {formatCurrency(
+              +pagesSorted[0].price,
+              pagesSorted[0].shop.currency,
+              pagesSorted[0].shop.country,
+            )}{" "}
+            – Compare TCG Prices | Cardsbolt
+          </title>
+        ) : (
+          <title>
+            {props.products.productName} from – Compare TCG Prices | Cardsbolt
+          </title>
+        )}
+        {/* <title>
           {props.products.productName} from{" "}
           {formatCurrency(
             +pagesSorted[0].price,
@@ -215,12 +230,19 @@ const ProductPage = (props: ProductPageProps) => {
             pagesSorted[0].shop.country,
           )}{" "}
           – Compare TCG Prices | Cardsbolt
-        </title>
-
-        <meta
-          name="description"
-          content={`${props.products.productName}; From €${props.products.webPages?.[0].euroPrice}; ${props.products.webPages?.length} retailers compared; Price range €${props.products.webPages?.[0].euroPrice}–€${props.products.webPages?.at(-1)?.euroPrice}. Compare trading card game booster box prices on Cardsbolt.`}
-        />
+        </title>{" "} */}
+        :
+        {pagesSorted.length > 0 ? (
+          <meta
+            name="description"
+            content={`${props.products.productName}; From €${props.products.webPages?.[0].euroPrice}; ${props.products.webPages?.length} retailers compared; Price range €${props.products.webPages?.[0].euroPrice}–€${props.products.webPages?.at(-1)?.euroPrice}. Compare trading card game booster box prices on Cardsbolt.`}
+          />
+        ) : (
+          <meta
+            name="description"
+            content={`${props.products.productName}. Compare trading card game booster box prices on Cardsbolt.`}
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: props.productJsonLd }}
@@ -265,17 +287,22 @@ const ProductPage = (props: ProductPageProps) => {
                 <h1 className="mt-2 mb-4 text-sm font-bold text-white md:text-2xl">
                   {props.products.productName}
                 </h1>
-                <p className="text-xs text-slate-300">
-                  The cheapest {props.products.productName} currently available
-                  is{" "}
-                  {formatCurrency(
-                    +pagesSorted[0].price,
-                    pagesSorted[0].shop.currency,
-                    pagesSorted[0].shop.country,
-                  )}{" "}
-                  from {pagesSorted[0].shop.name} in{" "}
-                  {pagesSorted[0].shop.country}.
-                </p>
+                {pagesSorted.length > 0 ? (
+                  <p className="text-xs text-slate-300">
+                    The cheapest {props.products.productName} currently
+                    available is{" "}
+                    {formatCurrency(
+                      +pagesSorted[0].price,
+                      pagesSorted[0].shop.currency,
+                      pagesSorted[0].shop.country,
+                    )}{" "}
+                    from {pagesSorted[0].shop.name} in{" "}
+                    {pagesSorted[0].shop.country}.
+                  </p>
+                ) : (
+                  <p>No pages to show</p>
+                )}
+
                 <p className="mt-2 hidden text-xs text-slate-400 md:inline-block">
                   Cardsbolt compares prices for trading card game booster boxes
                   across UK and international TCG retailers so players can
@@ -453,7 +480,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
   const lowest = json.webPages?.[0];
   const highest = json.webPages?.at(-1) ?? lowest;
 
-  const productJsonLd = JSON.stringify({
+  const productObject = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: json.productName,
@@ -464,15 +491,20 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
       name: json.productBrand,
     },
     dateModified: new Date().toISOString(),
-    offers: {
+    offers: {},
+  };
+
+  if (lowest && highest)
+    productObject.offers = {
       "@type": "AggregateOffer",
       lowPrice: Number(lowest.euroPrice),
       highPrice: Number(highest.euroPrice),
       offerCount: json.webPages.length,
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
-    },
-  });
+    };
+
+  const productJsonLd = JSON.stringify(productObject);
 
   return {
     props: { products: json, productJsonLd },

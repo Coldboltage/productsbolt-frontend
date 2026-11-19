@@ -40,6 +40,7 @@ interface Product {
   productImage: string;
   productBrand: string;
   productUrlSafeName: string;
+  productBrandUrlSafeName: string;
   webPages: WebPage[];
 }
 
@@ -254,7 +255,7 @@ const ProductPage = (props: ProductPageProps) => {
           <BreadCrumbs
             breadcrumbElements={[
               {
-                link: props.products.productUrlSafeName,
+                link: props.products.productBrandUrlSafeName,
                 text: props.products.productBrand,
               },
               {
@@ -485,7 +486,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async (
     "@type": "Product",
     name: json.productName,
     image: json.productImage,
-    url: `https://cardsbolt.com/product/${json.productName}`,
+    url: `https://cardsbolt.com/product/${json.productUrlSafeName}`,
     brand: {
       "@type": "Brand",
       name: json.productBrand,

@@ -186,6 +186,7 @@ interface Product {
   brand: string;
   imageUrl: string;
   releaseDate: Date;
+  inStock: boolean;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
